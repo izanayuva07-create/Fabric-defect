@@ -166,11 +166,11 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25)}
 .st-info strong{color:var(--text)}
 .st-vp{position:relative;min-height:500px;display:flex;align-items:center;justify-content:center;
   background:#1C1917;overflow:hidden}
-#ins-img{max-width:100%;max-height:580px;display:block;margin:0 auto;object-fit:contain}
+#ins-img{max-width:100%;max-height:580px;display:block;margin:0 auto;object-fit:contain;filter:none!important}
 #ov-cv,#sw-cv{position:absolute;inset:0;pointer-events:none;width:100%;height:100%}
 .dz{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   border:2px dashed var(--border-b);border-radius:var(--r2);margin:16px;
-  background:rgba(250,247,242,.85);backdrop-filter:blur(12px);transition:all .2s;cursor:pointer}
+  background:rgba(250,247,242,.92);backdrop-filter:none!important;transition:all .2s;cursor:pointer}
 .dz:hover,.dz.dragover{border-color:var(--terracotta);background:rgba(194,65,12,.08)}
 .dz-ic{width:68px;height:68px;border-radius:18px;background:#fff;border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:16px;box-shadow:0 8px 20px rgba(0,0,0,0.04)}
@@ -418,7 +418,8 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
                 <span>Latency: <strong id="tl">0ms</strong></span>
                 <span>Res: <strong id="ir">800x600</strong></span>
               </div>
-              <div>
+              <div style="display:flex;gap:8px">
+                <button class="btn bgh" style="padding:6px 12px;font-size:11px" onclick="document.getElementById('file-input').click()">📁 Upload File</button>
                 <button class="btn bgh" style="padding:6px 12px;font-size:11px" onclick="dlSnap()">💾 Export Frame</button>
               </div>
             </div>
@@ -432,7 +433,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
               <video id="wv" style="display:none" autoplay playsinline muted></video>
 
               <!-- DROPZONE -->
-              <div class="dz" id="dz" onclick="document.getElementById('file-input').click()">
+              <div class="dz" id="dz" style="display:none" onclick="document.getElementById('file-input').click()">
                 <div class="dz-ic">🧵</div>
                 <h3>Drop Fabric Image Here</h3>
                 <p>Supports PNG, JPG, WEBP up to 50MB</p>
@@ -845,7 +846,14 @@ function setupDragDrop(){
   ['dragleave','drop'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.remove('dragover');}));
   dz.addEventListener('drop',ev=>{
     const f=ev.dataTransfer.files[0];
-    if(f){stopWebcam();const r=new FileReader();r.onload=e=>document.getElementById('ins-img').src=e.target.result;r.readAsDataURL(f);sendP(f);}
+    if(f){
+      stopWebcam();
+      document.getElementById('dz').style.display='none';
+      const r=new FileReader();
+      r.onload=e=>document.getElementById('ins-img').src=e.target.result;
+      r.readAsDataURL(f);
+      sendP(f);
+    }
   });
 }
 
@@ -902,7 +910,7 @@ function toggleStream(){
 function stopWebcam(){
   if(wcStr){wcStr.getTracks().forEach(t=>t.stop());wcStr=null;}
   if(stInt){clearInterval(stInt);stInt=null;}
-  document.getElementById('dz').style.display='flex';
+  document.getElementById('dz').style.display='none';
   document.getElementById('cam-ctrl-bar').style.display='none';
   ['btn-sn','btn-st','btn-sc'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('btn-oc').style.display='inline-flex';
@@ -917,6 +925,7 @@ function stopWebcam(){
 function handleFile(e){
   const f=e.target.files[0];if(!f)return;
   stopWebcam();
+  document.getElementById('dz').style.display='none';
   const r=new FileReader();
   r.onload=ev=>document.getElementById('ins-img').src=ev.target.result;
   r.readAsDataURL(f);
@@ -925,6 +934,7 @@ function handleFile(e){
 
 function lp(e,type){
   stopWebcam();
+  document.getElementById('dz').style.display='none';
   document.querySelectorAll('.pchip').forEach(b=>b.classList.remove('act'));
   if(e?.target)e.target.classList.add('act');
   
