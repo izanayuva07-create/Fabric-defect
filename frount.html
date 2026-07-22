@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selvedge — Automated Fabric Inspection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EEF1EE;
+    --surface: #FFFFFF;
+    --surface-2: #E3E8E2;
+    --ink: #10161B;
+    --ink-soft: #4A5560;
+    --ink-faint: #7A8680;
+    --brand: #1B4B66;
+    --brand-deep: #0C2836;
+    --alert: #C1440E;
+    --alert-soft: #F5DED0;
+    --pass: #2F7A55;
+    --pass-soft: #DCEEE2;
+    --bronze: #8A6D3B;
+    --bronze-soft: #ECE3D0;
+    --line: #D2D8D0;
+    --line-strong: #B7BFB6;
+    --radius: 3px;
+    --display: "Big Shoulders Display", sans-serif;
+    --body: "IBM Plex Sans", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg{ display:block; max-width:100%; }
+  a{ color: inherit; text-decoration: none; }
+  button{ font-family: inherit; cursor:pointer; }
+  ::selection{ background: var(--alert); color: #fff; }
+
+  :focus-visible{ outline: 2px solid var(--brand); outline-offset: 3px; }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width: 18px;
+    height: 1px;
+    background: var(--brand);
+  }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(238,241,238,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .brand-mark{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    color: var(--brand-deep);
+  }
+  .brand-mark svg{ width:26px; height:26px; }
+
+  .site-nav{
+    display:flex;
+    align-items:center;
+    gap: 36px;
+  }
+  .site-nav a{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: color .15s ease;
+  }
+  .site-nav a:hover{ color: var(--ink); }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 20px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    white-space: nowrap;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn-primary{ background: var(--brand-deep); color: #fff; }
+  .btn-primary:hover{ background: var(--brand); }
+  .btn-ghost{ border-color: var(--line-strong); color: var(--ink); }
+  .btn-ghost:hover{ border-color: var(--brand); color: var(--brand); }
+  .btn-alert{ background: var(--alert); color: #fff; }
+  .btn-alert:hover{ background: #A6390B; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 88px 0 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .hero h1{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 58px;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    color: var(--brand-deep);
+    margin: 18px 0 22px;
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: var(--alert);
+  }
+  .hero p.lead{
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin-bottom: 32px;
+  }
+  .hero-cta{
+    display:flex;
+    gap: 14px;
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+  .stat-strip{
+    display:flex;
+    gap: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  .stat-strip div{
+    padding-right: 28px;
+    margin-right: 28px;
+    border-right: 1px solid var(--line);
+  }
+  .stat-strip div:last-child{ border-right:none; margin-right:0; padding-right:0; }
+  .stat-num{
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--brand-deep);
+    display:block;
+  }
+  .stat-label{
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ---------- Woven signature visual ---------- */
+  .weave-panel{
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .weave-panel .callout{
+    position:absolute;
+    background: var(--alert);
+    color:#fff;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 5px 9px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .weave-caption{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .weave-caption .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--pass);
+    display:inline-block;
+    margin-right:6px;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  .scan-line{
+    animation: scan-move 3.2s linear infinite;
+  }
+  @keyframes scan-move{
+    0%{ transform: translateY(-4%); opacity:0; }
+    8%{ opacity:.9; }
+    92%{ opacity:.9; }
+    100%{ transform: translateY(104%); opacity:0; }
+  }
+  .defect-node{
+    animation: node-pulse 2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes node-pulse{
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.5); }
+  }
+
+  /* ---------- Section shell ---------- */
+  section{ padding: 84px 0; }
+  .section-head{ max-width: 620px; margin-bottom: 48px; }
+  .section-head h2{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 38px;
+    color: var(--brand-deep);
+    margin-top: 14px;
+    letter-spacing: -0.005em;
+  }
+  .section-head p{ color: var(--ink-soft); margin-top: 12px; font-size: 15.5px; }
+
+  /* ---------- Scan demo ---------- */
+  .scan-demo{ background: var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .demo-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .dropzone{
+    background: var(--surface);
+    border: 2px dashed var(--line-strong);
+    border-radius: var(--radius);
+    aspect-ratio: 4/3;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap: 14px;
+    cursor:pointer;
+    transition: border-color .15s ease, background .15s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+  }
+  .dropzone:hover{ border-color: var(--brand); }
+  .dropzone.active{ border-style: solid; border-color: var(--brand); }
+  .dropzone .dz-icon{ width:40px; height:40px; color: var(--ink-faint); }
+  .dropzone .dz-title{ font-weight:600; font-size:15px; }
+  .dropzone .dz-sub{ font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); letter-spacing: 0.03em; }
+
+  .fabric-preview{
+    position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(90deg, #cfd6cd 0 2px, #e7ebe4 2px 8px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0 2px, transparent 2px 8px);
+    display:none;
+  }
+  .fabric-preview.show{ display:block; }
+
+  .scan-sweep{
+    position:absolute; left:0; right:0; top:0; height: 24%;
+    background: linear-gradient(180deg, rgba(27,75,102,0), rgba(27,75,102,0.35), rgba(27,75,102,0));
+    animation: sweep 1.8s linear infinite;
+  }
+  @keyframes sweep{ 0%{ top:-24%; } 100%{ top:100%; } }
+
+  .progress-wrap{
+    position:absolute; bottom: 18px; left:18px; right:18px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 8px 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    display:none;
+  }
+  .progress-wrap.show{ display:block; }
+  .progress-track{ height:4px; background: var(--line); margin-top:6px; border-radius:2px; overflow:hidden; }
+  .progress-fill{ height:100%; width:0%; background: var(--brand); transition: width .15s linear; }
+
+  .bbox{
+    position:absolute;
+    border: 1.5px solid var(--alert);
+    background: rgba(193,68,14,0.08);
+    display:none;
+  }
+  .bbox span{
+    position:absolute; top:-20px; left:-1.5px;
+    background: var(--alert);
+    color:#fff;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 5px;
+    white-space: nowrap;
+  }
+
+  .results-panel{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .results-panel h3{
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .results-empty{
+    color: var(--ink-faint);
+    font-size: 14px;
+    padding: 30px 0;
+    text-align:center;
+  }
+  .result-status{
+    display:none;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--mono);
+    letter-spacing: 0.03em;
+  }
+  .result-status.pass{
+    display:block;
+    background: var(--pass-soft);
+    color: var(--pass);
+    border: 1px solid #c5dfcf;
+  }
+  .result-status.fail{
+    display:block;
+    background: var(--alert-soft);
+    color: var(--alert);
+    border: 1px solid #f0cab7;
+  }
+  table.defect-table{ width:100%; border-collapse: collapse; display:none; }
+  table.defect-table.show{ display:table; }
+  .defect-table th{
+    text-align:left;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--line);
+    padding: 0 8px 8px 0;
+  }
+  .defect-table td{
+    padding: 12px 8px 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+    vertical-align: top;
+  }
+  .defect-table tr:last-child td{ border-bottom:none; }
+  .sev-chip{
+    display:inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .sev-critical{ background: var(--alert-soft); color: var(--alert); }
+  .sev-moderate{ background: var(--bronze-soft); color: var(--bronze); }
+  .defect-name{ font-weight:600; }
+  .defect-loc{ font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+  .reset-row{ margin-top:18px; display:flex; justify-content:flex-end; display:none; }
+  .reset-row.show{ display:flex; }
+  .reset-row button{
+    background:none; border:none; font-family: var(--mono);
+    font-size:12px; color: var(--brand); text-decoration: underline;
+  }
+
+  /* ---------- How it works ---------- */
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .step{ border-top: 2px solid var(--brand-deep); padding-top: 18px; }
+  .step .num{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--bronze);
+  }
+  .step h3{
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 10px 0 10px;
+    color: var(--ink);
+  }
+  .step p{ color: var(--ink-soft); font-size: 14.5px; }
+
+  /* ---------- Capabilities ---------- */
+  .capabilities{ background: var(--brand-deep); }
+  .capabilities .eyebrow{ color: #7FB3CE; }
+  .capabilities .eyebrow::before{ background: #7FB3CE; }
+  .capabilities .section-head h2, .capabilities .section-head p{ color: #EAF1F4; }
+  .capabilities .section-head p{ color: #B9CDD8; }
+
+  .cap-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.12);
+  }
+  .cap-card{
+    background: var(--brand-deep);
+    padding: 26px 24px;
+    position: relative;
+  }
+  .cap-card::after{
+    content:"";
+    position:absolute; top:14px; right:14px;
+    width:8px; height:8px;
+    border-radius: 50%;
+    background: #7FB3CE;
+    opacity: .5;
+  }
+  .cap-card svg{ width:28px; height:28px; color:#7FB3CE; margin-bottom: 16px; }
+  .cap-card h4{ font-family: var(--display); font-weight:700; font-size:19px; color:#fff; margin-bottom:8px; }
+  .cap-card p{ font-size: 13.5px; color: #AEC3CE; margin-bottom: 14px; }
+  .cap-conf{ font-family: var(--mono); font-size: 11px; color: #7FB3CE; }
+
+  /* ---------- Stats ---------- */
+  .stats{ border-bottom: 1px solid var(--line); }
+  .stats-grid{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 32px;
+  }
+  .stats-grid .big-num{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 44px;
+    color: var(--brand-deep);
+  }
+  .stats-grid .big-label{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    padding: 40px 0;
+  }
+  .site-footer .wrap{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .site-footer .fine{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-faint);
+  }
+  .footer-links{ display:flex; gap: 24px; }
+  .footer-links a{ font-size: 13px; color: var(--ink-soft); }
+  .footer-links a:hover{ color: var(--brand); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+
+  @media (max-width: 880px){
+    .wrap{ padding: 0 20px; }
+    .hero .wrap{ grid-template-columns: 1fr; }
+    .hero h1{ font-size: 40px; }
+    .demo-grid{ grid-template-columns: 1fr; }
+    .steps{ grid-template-columns: 1fr; }
+    .cap-grid{ grid-template-columns: 1fr 1fr; }
+    .stats-grid{ grid-template-columns: 1fr 1fr; }
+    .site-nav{ display:none; }
+    .stat-strip{ flex-wrap: wrap; gap: 16px; }
+    .stat-strip div{ border-right:none; padding-right:0; margin-right:0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-mark">
+      <svg viewBox="0 0 26 26" fill="none">
+        <path d="M2 5H24M2 9H24M2 13H24M2 17H24M2 21H24" stroke="#1B4B66" stroke-width="1.4"/>
+        <path d="M6 2V24M11 2V24M16 2V24M21 2V24" stroke="#C1440E" stroke-width="1.4"/>
+      </svg>
+      SELVEDGE
+    </div>
+    <nav class="site-nav">
+      <a href="#scan">Platform</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#how">How it works</a>
+      <a href="#enterprise">Enterprise</a>
+    </nav>
+    <a href="#scan" class="btn btn-primary">Request a demo</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Automated Quality Control</div>
+      <h1>Catch the flaw<br>before it leaves<br>the <em>loom.</em></h1>
+      <p class="lead">Selvedge inspects every meter of fabric in real time — flagging holes, slubs, misweaves and stains before they reach the cutting table, with the exact location and a recommended fix.</p>
+      <div class="hero-cta">
+        <a href="#scan" class="btn btn-alert">Scan a swatch</a>
+        <a href="#coverage" class="btn btn-ghost">View defect coverage</a>
+      </div>
+      <div class="stat-strip">
+        <div><span class="stat-num">99.2%</span><span class="stat-label">Catch rate</span></div>
+        <div><span class="stat-num">0.4s</span><span class="stat-label">Per meter scanned</span></div>
+        <div><span class="stat-num">6</span><span class="stat-label">Defect classes</span></div>
+      </div>
+    </div>
+
+    <div class="weave-panel">
+      <svg viewBox="0 0 400 300" width="100%" style="overflow:visible">
+        <defs>
+          <clipPath id="weaveClip"><rect x="0" y="0" width="400" height="300" rx="2"/></clipPath>
+          <linearGradient id="sweepGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1B4B66" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#1B4B66" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#1B4B66" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g clip-path="url(#weaveClip)">
+          <rect x="0" y="0" width="400" height="300" fill="#FCFCFB"/>
+          <!-- warp (vertical) threads -->
+          <g stroke="#C9D0C6" stroke-width="1">
+            <!-- generated grid lines -->
+            <g id="vlines"></g>
+            <g id="hlines"></g>
+          </g>
+          <!-- scan sweep -->
+          <rect class="scan-line" x="0" y="0" width="400" height="60" fill="url(#sweepGrad)"/>
+          <!-- flagged defect node -->
+          <circle class="defect-node" cx="248" cy="132" r="4" fill="#C1440E"/>
+          <circle cx="248" cy="132" r="4" fill="none" stroke="#C1440E" stroke-width="1"/>
+          <line x1="252" y1="128" x2="300" y2="96" stroke="#C1440E" stroke-width="1"/>
+        </g>
+      </svg>
+      <div class="callout" style="left: 300px; top: 78px; transform: translate(-4px,-100%);">Weft slub · 94%</div>
+      <div class="weave-caption">
+        <span><span class="dot"></span>Live inspection feed</span>
+        <span>Row 12 / Roll 0447</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scan-demo" id="scan">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Live Demo</div>
+      <h2>Drop in a swatch. Watch it get inspected.</h2>
+      <p>This runs a sample inspection pass in your browser. Connect it to your own model's <code>/predict</code> endpoint to score real images.</p>
+    </div>
+
+    <div class="demo-grid">
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload a fabric swatch to scan">
+        <div class="fabric-preview" id="fabricPreview"></div>
+        <div class="scan-sweep" id="scanSweep" style="display:none;"></div>
+
+        <svg class="dz-icon" id="dzIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+          <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="dz-title" id="dzTitle">Drag a swatch image here</div>
+        <div class="dz-sub" id="dzSub">OR CLICK TO RUN SAMPLE SCAN · JPG / PNG</div>
+
+        <!-- Image upload + webcam controls -->
+        <input id="fileInput" type="file" accept="image/*" style="display:none">
+        <div style="margin-top:12px; display:flex; gap:8px; justify-content:center; width:100%;">
+          <button class="btn btn-ghost" id="uploadBtn" type="button">Upload image</button>
+          <button class="btn btn-ghost" id="startCamBtn" type="button">Start webcam</button>
+          <button class="btn btn-ghost" id="captureBtn" type="button" style="display:none">Capture frame</button>
+        </div>
+
+        <video id="video" autoplay playsinline style="display:none; width:100%; height:auto; margin-top:10px; object-fit:cover;"></video>
+        <canvas id="canvas" style="display:none"></canvas>
+        <div id="previewArea" style="margin-top:12px; text-align:center; font-family: var(--mono); font-size:12px; color:var(--ink-faint);"></div>
+
+        <div class="bbox" id="bbox1" style="left:22%; top:28%; width:20%; height:16%;"><span>Slub</span></div>
+        <div class="bbox" id="bbox2" style="left:58%; top:52%; width:16%; height:14%;"><span>Oil stain</span></div>
+
+        <div class="progress-wrap" id="progressWrap">
+          <div style="display:flex; justify-content:space-between;">
+            <span>SCANNING</span><span id="progressPct">0%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <h3>Inspection Results</h3>
+        <div class="result-status" id="resultStatus"></div>
+        <div class="results-empty" id="resultsEmpty">No scan yet — run the sample scan to see flagged defects here.</div>
+        <table class="defect-table" id="defectTable">
+          <thead>
+            <tr><th>Defect</th><th>Location</th><th>Confidence</th><th>Recommended action</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="defect-name">Weft slub</span><br><span class="sev-chip sev-moderate">Moderate</span></td>
+              <td class="defect-loc">Row 12<br>340mm</td>
+              <td class="defect-loc">94%</td>
+              <td>Flag for rework — slub density below reject threshold.</td>
+            </tr>
+            <tr>
+              <td><span class="defect-name">Oil stain</span><br><span class="sev-chip sev-critical">Critical</span></td>
+              <td class="defect-loc">Row 47<br>110mm</td>
+              <td class="defect-loc">88%</td>
+              <td>Reject segment — trace source to roller station 3.</td>
+            </tr>
+            <tr>
+              <td><span class="defect-name">Broken pick</span><br><span class="sev-chip sev-critical">Critical</span></td>
+              <td class="defect-loc">Row 63<br>875mm</td>
+              <td class="defect-loc">91%</td>
+              <td>Halt loom — misweave repair required before continuing.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="reset-row" id="resetRow"><button id="resetBtn">Scan another swatch →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Process</div>
+      <h2>From roll to report in three passes.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Upload</h3>
+        <p>Feed a swatch photo, or connect a line-scan camera to inspect fabric continuously as it comes off the loom.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Inspect</h3>
+        <p>A convolutional pass runs over every thread line, comparing the weave against a clean reference pattern.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Resolve</h3>
+        <p>Flags route straight to the floor dashboard with location, confidence, and a recommended fix — before the roll moves on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="capabilities" id="coverage">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Defect Coverage</div>
+      <h2>Six defect classes, one pass.</h2>
+      <p>Trained on mill-floor imagery across cotton, poly-blend and denim weaves.</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4"/><path d="M2 12h6M16 12h6M12 2v6M12 16v6" stroke-linecap="round"/></svg>
+        <h4>Holes &amp; tears</h4>
+        <p>Punctures and torn threads from tension faults or worn needles.</p>
+        <div class="cap-conf">avg. 97% confidence</div>
+      </div>
+      <div class="cap-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 18c3-8 6-12 8-12s2 4 8 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Stains &amp; oil marks</h4>
+        <p>Roller oil, dye bleed and moisture discoloration.</p>
+        <div class="cap-conf">avg. 95% confidence</div>
+      </div>
+      <div class="cap-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12c2-4 4-4 6 0s4 4 6 0 4-4 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Slubs</h4>
+        <p>Irregular thick spots in the yarn that break the weave's evenness.</p>
+        <div class="cap-conf">avg. 94% confidence</div>
+      </div>
+      <div class="cap-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M3 12h18M3 18h10" stroke-linecap="round"/></svg>
+        <h4>Misweave &amp; broken pick</h4>
+        <p>Skipped or snapped weft threads that leave a visible gap.</p>
+        <div class="cap-conf">avg. 91% confidence</div>
+      </div>
+      <div class="cap-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+        <h4>Color shading</h4>
+        <p>Batch-to-batch dye variation visible across roll width.</p>
+        <div class="cap-conf">avg. 89% confidence</div>
+      </div>
+      <div class="cap-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v18M6 8l12 8M18 8L6 16" stroke-linecap="round"/></svg>
+        <h4>Foreign yarn</h4>
+        <p>Mismatched fiber or color pulled into the weave by accident.</p>
+        <div class="cap-conf">avg. 93% confidence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats" id="enterprise">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Enterprise</div>
+      <h2>Built for the mill floor, not the demo floor.</h2>++++++++++++++++++++++++
+    </div>
+    <div class="stats-grid">
+      <div><div class="big-num">40+</div><div class="big-label">Mills running Selvedge in production</div></div>
+      <div><div class="big-num">18M</div><div class="big-label">Meters inspected monthly</div></div>
+      <div><div class="big-num">62%</div><div class="big-label">Reduction in manual inspection hours</div></div>
+      <div><div class="big-num">&lt;400ms</div><div class="big-label">Latency per inspected frame</div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="brand-mark" style="font-size:16px;">
+      <svg viewBox="0 0 26 26" fill="none" style="width:18px;height:18px;">
+        <path d="M2 5H24M2 9H24M2 13H24M2 17H24M2 21H24" stroke="#1B4B66" stroke-width="1.4"/>
+        <path d="M6 2V24M11 2V24M16 2V24M21 2V24" stroke="#C1440E" stroke-width="1.4"/>
+      </svg>
+      SELVEDGE
+    </div>
+    <div class="footer-links">
+      <a href="#scan">Platform</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#enterprise">Enterprise</a>
+    </div>
+    <div class="fine">© 2026 Selvedge Inspection Systems</div>
+  </div>
+</footer>
+
+<script>
+  // Build the woven grid programmatically
+  (function(){
+    const vlines = document.getElementById('vlines');
+    const hlines = document.getElementById('hlines');
+    const ns = "http://www.w3.org/2000/svg";
+    for(let x=8; x<=392; x+=14){
+      const l = document.createElementNS(ns,'line');
+      l.setAttribute('x1',x); l.setAttribute('y1',0);
+      l.setAttribute('x2',x); l.setAttribute('y2',300);
+      l.setAttribute('opacity', (Math.floor(x/14)%2===0) ? '0.9' : '0.4');
+      vlines.appendChild(l);
+    }
+    for(let y=6; y<=294; y+=12){
+      const l = document.createElementNS(ns,'line');
+      l.setAttribute('x1',0); l.setAttribute('y1',y);
+      l.setAttribute('x2',400); l.setAttribute('y2',y);
+      l.setAttribute('opacity', (Math.floor(y/12)%2===0) ? '0.5' : '0.2');
+      hlines.appendChild(l);
+    }
+  })();
+
+  // Scan demo interaction with image upload and webcam capture
+  (function(){
+    const dropzone = document.getElementById('dropzone');
+    const fabricPreview = document.getElementById('fabricPreview');
+    const scanSweep = document.getElementById('scanSweep');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressPct = document.getElementById('progressPct');
+    const dzIcon = document.getElementById('dzIcon');
+    const dzTitle = document.getElementById('dzTitle');
+    const dzSub = document.getElementById('dzSub');
+    const bbox1 = document.getElementById('bbox1');
+    const bbox2 = document.getElementById('bbox2');
+    const resultsEmpty = document.getElementById('resultsEmpty');
+    const resultStatus = document.getElementById('resultStatus');
+    const defectTable = document.getElementById('defectTable');
+    const resetRow = document.getElementById('resetRow');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // New controls
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const startCamBtn = document.getElementById('startCamBtn');
+    const captureBtn = document.getElementById('captureBtn');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const previewArea = document.getElementById('previewArea');
+    let camStream = null;
+    let camActive = false;
+
+    let running = false;
+    let currentImageUrl = null;
+
+    function showPreviewFromURL(url){
+      currentImageUrl = url;
+      fabricPreview.style.backgroundImage = `url(${url})`;
+      fabricPreview.classList.add('show');
+      previewArea.textContent = 'Preview shown below — ready to scan.';
+      resultStatus.className = 'result-status';
+      resultStatus.textContent = '';
+    }
+
+    function drawImageToCanvas(source, callback){
+      const img = new Image();
+      img.onload = () => {
+        const maxW = 900;
+        const maxH = 700;
+        let w = img.width;
+        let h = img.height;
+        if(w > maxW || h > maxH){
+          const scale = Math.min(maxW / w, maxH / h);
+          w = Math.floor(w * scale);
+          h = Math.floor(h * scale);
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        callback();
+      };
+      img.src = source;
+    }
+
+    function analyzeImageForStains(){
+      const ctx = canvas.getContext('2d');
+      const { width, height } = canvas;
+      if(width === 0 || height === 0){ return { passed: true, stainPixels: 0 }; }
+
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+
+      let rSum = 0;
+      let gSum = 0;
+      let bSum = 0;
+      let count = 0;
+      for(let y = 0; y < height; y += 4){
+        for(let x = 0; x < width; x += 4){
+          const i = (y * width + x) * 4;
+          rSum += data[i];
+          gSum += data[i + 1];
+          bSum += data[i + 2];
+          count++;
+        }
+      }
+
+      const avgR = rSum / count;
+      const avgG = gSum / count;
+      const avgB = bSum / count;
+
+      let stainPixels = 0;
+      let minX = width;
+      let maxX = 0;
+      let minY = height;
+      let maxY = 0;
+
+      for(let y = 0; y < height; y++){
+        for(let x = 0; x < width; x++){
+          const i = (y * width + x) * 4;
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const a = data[i + 3];
+          if(a < 80) continue;
+
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+          const saturation = Math.max(0, Math.max(r, g, b) - Math.min(r, g, b)) / 255;
+          const colorDiff = Math.max(Math.abs(r - avgR), Math.abs(g - avgG), Math.abs(b - avgB));
+          const isStain = (saturation > 0.16 && colorDiff > 45) || (gray < 135 && colorDiff > 28);
+
+          if(isStain){
+            stainPixels++;
+            minX = Math.min(minX, x);
+            maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y);
+            maxY = Math.max(maxY, y);
+          }
+        }
+      }
+
+      const ratio = stainPixels / (width * height);
+      if(ratio > 0.0025 || (maxX - minX > 20 && maxY - minY > 20)){
+        return {
+          passed: false,
+          stainPixels,
+          bbox: [minX, minY, Math.max(8, maxX - minX + 1), Math.max(8, maxY - minY + 1)]
+        };
+      }
+
+      return { passed: true, stainPixels };
+    }
+
+    function updateInspectionResult(result){
+      const tbody = defectTable.querySelector('tbody');
+      if(result.passed){
+        resultStatus.className = 'result-status pass';
+        resultStatus.textContent = 'PASS — no stain detected.';
+        resultsEmpty.style.display = 'block';
+        resultsEmpty.innerHTML = '<strong>PASS</strong><br>No stains detected in the uploaded image.';
+        defectTable.classList.remove('show');
+        bbox1.style.display = 'none';
+        bbox2.style.display = 'none';
+        tbody.innerHTML = '';
+      } else {
+        resultStatus.className = 'result-status fail';
+        resultStatus.textContent = 'FAIL — stain detected.';
+        resultsEmpty.style.display = 'none';
+        defectTable.classList.add('show');
+        bbox1.style.display = 'block';
+        bbox1.querySelector('span').textContent = 'Stain';
+        bbox1.style.left = `${Math.max(4, Math.min(84, (result.bbox[0] / canvas.width) * 100))}%`;
+        bbox1.style.top = `${Math.max(4, Math.min(84, (result.bbox[1] / canvas.height) * 100))}%`;
+        bbox1.style.width = `${Math.max(6, Math.min(88, (result.bbox[2] / canvas.width) * 100))}%`;
+        bbox1.style.height = `${Math.max(6, Math.min(88, (result.bbox[3] / canvas.height) * 100))}%`;
+        bbox2.style.display = 'none';
+        tbody.innerHTML = `
+          <tr>
+            <td><span class="defect-name">Possible stain</span><br><span class="sev-chip sev-critical">Critical</span></td>
+            <td class="defect-loc">Detected region<br>${Math.round(result.bbox[2])} × ${Math.round(result.bbox[3])} px</td>
+            <td class="defect-loc">${result.stainPixels}</td>
+            <td>Route for reinspection — a stain-like region was found in the image.</td>
+          </tr>
+        `;
+      }
+    }
+
+    function runScan(){
+      if(running) return;
+      running = true;
+      dropzone.classList.add('active');
+      fabricPreview.classList.add('show');
+      scanSweep.style.display = 'block';
+      progressWrap.classList.add('show');
+      dzIcon.style.display = 'none';
+      dzTitle.style.display = 'none';
+      dzSub.textContent = 'INSPECTING SWATCH…';
+
+      let pct = 0;
+      const iv = setInterval(() => {
+        pct += Math.random()*14 + 6;
+        if(pct >= 100){ pct = 100; clearInterval(iv); finishScan(); }
+        progressFill.style.width = pct + '%';
+        progressPct.textContent = Math.floor(pct) + '%';
+      }, 180);
+    }
+
+    function finishScan(){
+      scanSweep.style.display = 'none';
+      progressWrap.classList.remove('show');
+      dzSub.textContent = 'SCAN COMPLETE';
+      if(currentImageUrl){
+        drawImageToCanvas(currentImageUrl, () => {
+          const result = analyzeImageForStains();
+          updateInspectionResult(result);
+        });
+      } else {
+        updateInspectionResult({ passed: true, stainPixels: 0 });
+      }
+      resetRow.classList.add('show');
+    }
+
+    function stopCam(){
+      if(camStream){
+        camStream.getTracks().forEach(t => t.stop());
+        camStream = null;
+      }
+      video.style.display = 'none';
+      captureBtn.style.display = 'none';
+      startCamBtn.textContent = 'Start webcam';
+      camActive = false;
+    }
+
+    function resetScan(){
+      running = false;
+      currentImageUrl = null;
+      dropzone.classList.remove('active');
+      fabricPreview.classList.remove('show');
+      dzIcon.style.display = '';
+      dzTitle.style.display = '';
+      dzSub.textContent = 'OR CLICK TO RUN SAMPLE SCAN · JPG / PNG';
+      progressFill.style.width = '0%';
+      progressPct.textContent = '0%';
+      bbox1.style.display = 'none';
+      bbox2.style.display = 'none';
+      resultStatus.className = 'result-status';
+      resultStatus.textContent = '';
+      resultsEmpty.style.display = 'block';
+      resultsEmpty.innerHTML = 'No scan yet — run the sample scan to see flagged defects here.';
+      defectTable.classList.remove('show');
+      resetRow.classList.remove('show');
+      previewArea.textContent = '';
+      stopCam();
+    }
+
+    // Upload button triggers hidden file input
+    uploadBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+    fileInput.addEventListener('change', (e) => {
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      if(!f.type.startsWith('image/')) return alert('Please select an image file');
+      const url = URL.createObjectURL(f);
+      showPreviewFromURL(url);
+      runScan();
+      setTimeout(() => URL.revokeObjectURL(url), 20000);
+    });
+
+    // Webcam start/stop
+    startCamBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      if(!camActive){
+        try{
+          camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+          video.srcObject = camStream;
+          await video.play();
+          video.style.display = 'block';
+          captureBtn.style.display = 'inline-flex';
+          startCamBtn.textContent = 'Stop webcam';
+          camActive = true;
+        }catch(err){
+          alert('Unable to access camera: ' + (err.message || err));
+        }
+      } else {
+        stopCam();
+      }
+    });
+
+    // Capture current video frame and run a scan on it
+    captureBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if(!camActive) return;
+      const w = video.videoWidth || 640;
+      const h = video.videoHeight || 480;
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, w, h);
+      const dataURL = canvas.toDataURL('image/jpeg');
+      showPreviewFromURL(dataURL);
+      runScan();
+    });
+
+    dropzone.addEventListener('click', runScan);
+    dropzone.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') runScan(); });
+    resetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetScan(); });
+
+    ['dragover','dragenter'].forEach(evt => {
+      dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.style.borderColor = '#1B4B66'; });
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault(); dropzone.style.borderColor = '';
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if(f && f.type && f.type.startsWith('image/')){
+        const url = URL.createObjectURL(f);
+        showPreviewFromURL(url);
+        runScan();
+        setTimeout(() => URL.revokeObjectURL(url), 20000);
+      } else {
+        runScan();
+      }
+    });
+
+    ['dragleave'].forEach(evt => {
+      dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.style.borderColor = ''; });
+    });
+  })();
+</script>
+
+</body>
+</html>
