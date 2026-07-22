@@ -368,16 +368,16 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
               <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.20" oninput="onTh(this.value)">
             </div>
 
-            <!-- PRESETS -->
+            <!-- REAL FABRIC PRESETS -->
             <div class="cg">
-              <div class="cl"><span>Sample Weaves</span></div>
+              <div class="cl"><span>Real Defect Swatches</span></div>
               <div class="pgrid">
                 <button class="pchip cln act" onclick="lp(event,'clean')">✨ Clean (Pass)</button>
-                <button class="pchip" onclick="lp(event,'slub')">🧶 Slub & Yarn</button>
                 <button class="pchip" onclick="lp(event,'stain')">🛢️ Oil Stain</button>
+                <button class="pchip" onclick="lp(event,'water')">💧 Water Stain</button>
                 <button class="pchip" onclick="lp(event,'hole')">🕳️ Tear & Hole</button>
-                <button class="pchip" onclick="lp(event,'weft')">🧵 Misweave</button>
-                <button class="pchip" onclick="lp(event,'reed')">📏 Reed Mark</button>
+                <button class="pchip" onclick="lp(event,'slub')">🧶 Slub & Weave</button>
+                <button class="pchip" onclick="lp(event,'sample')">🧵 Roll Sample</button>
               </div>
             </div>
 
@@ -420,7 +420,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
             </div>
 
             <div class="st-vp" id="stage">
-              <img id="ins-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect width='800' height='600' fill='%23F4EFE6'/%3E%3C/svg%3E" alt="Fabric Scan">
+              <img id="ins-img" src="/test_clean.jpg" alt="Fabric Scan" crossorigin="anonymous">
               <canvas id="ov-cv"></canvas>
               <canvas id="sw-cv"></canvas>
 
@@ -811,7 +811,16 @@ function animSw(){
 }
 animSw();
 
-// COUNTERS & LOAD INIT
+// REAL FABRIC SAMPLE PRESET MAP & PRESET LOADER
+const PRESETS = {
+  'clean': '/test_clean.jpg',
+  'stain': '/test_oil.jpg',
+  'water': '/test_water.jpg',
+  'hole': '/test_hole.jpg',
+  'slub': '/test_detected.jpg',
+  'sample': '/sample.jpg'
+};
+
 addEventListener('load',()=>{
   document.querySelectorAll('[data-count]').forEach(el=>{
     const t=parseFloat(el.dataset.count);let c=0;
@@ -910,33 +919,30 @@ function handleFile(e){
   sendP(f);
 }
 
-// PRESETS
-function genP(t){
-  const c=document.createElement('canvas');c.width=800;c.height=600;const x=c.getContext('2d');
-  const dm=t==='denim';x.fillStyle=dm?'#1B3560':'#E8E4DC';x.fillRect(0,0,800,600);
-  x.strokeStyle=dm?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)';x.lineWidth=1;
-  for(let i=0;i<800;i+=6){x.beginPath();x.moveTo(i,0);x.lineTo(i,600);x.stroke();}
-  for(let j=0;j<600;j+=6){x.beginPath();x.moveTo(0,j);x.lineTo(800,j);x.stroke();}
-  if(t==='slub'){x.fillStyle='#9E8B6E';x.beginPath();x.ellipse(320,220,65,12,Math.PI/12,0,Math.PI*2);x.fill();}
-  else if(t==='stain'){x.fillStyle='rgba(30,20,10,.80)';x.beginPath();x.ellipse(450,280,48,32,Math.PI/6,0,Math.PI*2);x.fill();}
-  else if(t==='hole'){x.fillStyle='#1C1917';x.beginPath();x.arc(260,310,26,0,Math.PI*2);x.fill();x.strokeStyle='#553322';x.lineWidth=3;x.stroke();}
-  else if(t==='weft'){x.fillStyle='#C8D0C0';x.fillRect(50,380,700,16);}
-  else if(t==='reed'){x.strokeStyle='rgba(0,0,0,.28)';x.lineWidth=4;x.beginPath();x.moveTo(390,0);x.lineTo(390,600);x.moveTo(408,0);x.lineTo(408,600);x.stroke();}
-  else if(t==='shade'){const g=x.createLinearGradient(350,0,800,0);g.addColorStop(0,'transparent');g.addColorStop(1,'rgba(160,110,70,.40)');x.fillStyle=g;x.fillRect(0,0,800,600);}
-  return c;
-}
-
-function lp(e,t){
+function lp(e,type){
   stopWebcam();
   document.querySelectorAll('.pchip').forEach(b=>b.classList.remove('act'));
   if(e?.target)e.target.classList.add('act');
-  const c=genP(t);
-  document.getElementById('ins-img').src=c.toDataURL('image/jpeg',.92);
-  document.getElementById('ir').textContent='800x600';
-  if(t==='clean'){
-    report={defect_count:0,total_astm_points:0,quality_grade:'GRADE A — PERFECT PASS',grade_status:'Pass',defects:[]};
-    setSt('PASS — CLEAN','var(--green)');renderR();
-  }else{c.toBlob(b=>sendP(b),'image/jpeg');}
+  
+  const src = PRESETS[type] || PRESETS['clean'];
+  const img = document.getElementById('ins-img');
+  
+  img.crossOrigin = "anonymous";
+  img.onload = function() {
+    document.getElementById('ir').textContent = (img.naturalWidth || 800) + 'x' + (img.naturalHeight || 600);
+    fetch(img.src)
+      .then(res => res.blob())
+      .then(blob => sendP(blob))
+      .catch(() => {
+        const cv = document.createElement('canvas');
+        cv.width = img.naturalWidth || 800;
+        cv.height = img.naturalHeight || 600;
+        const ctx = cv.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        cv.toBlob(b => sendP(b), 'image/jpeg');
+      });
+  };
+  img.src = src + '?t=' + Date.now();
 }
 
 function sendP(blob){
