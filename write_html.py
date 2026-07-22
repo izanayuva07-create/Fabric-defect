@@ -7,8 +7,8 @@ HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SELVEDGE AI — Smart India Hackathon Winning Fabric Defect Inspection Platform</title>
-<meta name="description" content="SIH 2026 Winning AI Fabric Defect Inspection Platform with real-time multi-model vision, ASTM D5430 quality grading, defect heatmap, and webcam stream support.">
+<title>SELVEDGE AI — Industrial Fabric Inspection Platform</title>
+<meta name="description" content="AI Fabric Defect Inspection Platform with real-time multi-model vision, ASTM D5430 quality grading, live webcam stream, user login, and subscription tiers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -31,26 +31,32 @@ body{background:var(--void);color:var(--text);font-family:var(--fb);overflow-x:h
 .rel{position:relative;z-index:1}
 .con{max-width:1400px;margin:0 auto;padding:0 24px}
 
-/* SIH HACKATHON HEADER NAVBAR */
+/* CLEAN NAVBAR WITH 3-LINE HAMBURGER MENU */
 nav{position:fixed;top:0;left:0;right:0;z-index:999;
-  background:rgba(250,247,242,.93);backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center}
+  background:rgba(250,247,242,.94);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);height:62px;display:flex;align-items:center}
 .nav-i{max-width:1400px;margin:0 auto;padding:0 24px;
   display:flex;align-items:center;justify-content:space-between;width:100%}
+.nav-left{display:flex;align-items:center;gap:14px}
+
+/* 3-LINE HAMBURGER BUTTON */
+.menu-btn{background:var(--lift);border:1px solid var(--border);width:38px;height:38px;
+  border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;cursor:pointer;transition:all .2s}
+.menu-btn:hover{background:#fff;border-color:var(--terracotta)}
+.menu-btn span{width:18px;height:2px;background:var(--text);border-radius:2px;transition:all .2s}
+
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--fh);font-size:18px;font-weight:800;letter-spacing:1.5px;color:var(--text)}
-.logo-ic{width:36px;height:36px;background:linear-gradient(135deg,var(--terracotta),var(--gold));
+.logo-ic{width:34px;height:34px;background:linear-gradient(135deg,var(--terracotta),var(--gold));
   border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px var(--terracotta-g)}
-.logo-ic svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.logo-ic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .ai-t{background:linear-gradient(135deg,var(--terracotta),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-/* SIH BADGE */
-.sih-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(194,65,12,0.1);
-  border:1px solid var(--border-b);padding:4px 12px;border-radius:99px;font-family:var(--fc);
-  font-size:11px;font-weight:700;color:var(--terracotta)}
-
-.nav-links{display:flex;gap:24px;list-style:none}
+/* ONLY 3 NAV LINKS */
+.nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
 .nav-links a:hover{color:var(--terracotta)}
+
 .nav-cta{display:flex;gap:10px;align-items:center}
 
 /* PILLS */
@@ -64,7 +70,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--fb);font-weight:700;font-size:13px;
-  padding:8px 18px;border-radius:var(--r1);cursor:pointer;border:none;transition:all .2s;white-space:nowrap}
+  padding:8px 16px;border-radius:var(--r1);cursor:pointer;border:none;transition:all .2s;white-space:nowrap}
 .bg{background:linear-gradient(135deg,var(--terracotta),#EA580C);color:#fff;box-shadow:0 4px 14px var(--terracotta-g)}
 .bg:hover{transform:translateY(-1px);box-shadow:0 6px 18px var(--terracotta-g)}
 .bgh{background:rgba(255,255,255,.9);color:var(--text);border:1px solid var(--border-b)}
@@ -74,13 +80,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 .bgr{background:linear-gradient(135deg,#059669,#10B981);color:#fff;box-shadow:0 4px 14px var(--green-g)}
 .bgr:hover{transform:translateY(-1px)}
 
+/* SLIDE-OUT LEFT DRAWER MENU */
+.drawer-overlay{position:fixed;inset:0;background:rgba(28,25,23,.5);backdrop-filter:blur(8px);
+  z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:var(--panel);
+  border-right:1px solid var(--border-b);z-index:10000;transform:translateX(-100%);
+  transition:transform .25s cubic-bezier(0.16,1,0.3,1);padding:24px;display:flex;flex-direction:column;
+  box-shadow:10px 0 30px rgba(0,0,0,0.15)}
+.drawer-overlay.open .drawer{transform:translateX(0)}
+
+.drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;
+  padding-bottom:16px;border-bottom:1px solid var(--border)}
+.drawer-header h3{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--text)}
+.drawer-close{background:none;border:none;font-size:18px;color:var(--dim);cursor:pointer}
+
+.drawer-user{background:var(--lift);border:1px solid var(--border);border-radius:var(--r1);padding:14px;
+  margin-bottom:20px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.drawer-user:hover{border-color:var(--terracotta)}
+.drawer-user .u-ic{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--terracotta),var(--gold));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.drawer-user .u-info h4{font-size:13px;font-weight:700}
+.drawer-user .u-info p{font-size:11px;color:var(--dim)}
+
+.drawer-menu{list-style:none;display:flex;flex-direction:column;gap:8px}
+.drawer-menu a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r1);
+  color:var(--text);text-decoration:none;font-weight:600;font-size:13px;transition:all .15s}
+.drawer-menu a:hover{background:var(--lift);color:var(--terracotta)}
+
 /* MAIN WORKSPACE HEADER */
-.hdr{padding:88px 0 16px}
+.hdr{padding:84px 0 16px}
 .hdr-flex{display:flex;justify-content:space-between;align-items:flex-end}
 .hdr-title h1{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--text)}
 .hdr-title p{font-size:13px;color:var(--dim);margin-top:2px}
 
-/* STUDIO WORKBENCH GRID (2-COLUMN HACKATHON DASHBOARD) */
+/* STUDIO WORKBENCH GRID (2-COLUMN DASHBOARD) */
 .studio{padding:10px 0 40px}
 .wbench{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}
 
@@ -191,14 +225,29 @@ tr:last-child td{border-bottom:none}
 .cbb{flex:1;height:5px;background:var(--lift2);border-radius:3px;overflow:hidden}
 .cbf{height:100%;border-radius:3px}
 
-/* TECH MODAL */
-.mo{position:fixed;inset:0;z-index:9999;background:rgba(28,25,23,.65);backdrop-filter:blur(16px);
+/* MODALS */
+.mo{position:fixed;inset:0;z-index:99999;background:rgba(28,25,23,.65);backdrop-filter:blur(16px);
   display:none;align-items:center;justify-content:center;padding:20px}
 .mo.open{display:flex}
 .mb{background:var(--panel);border:1px solid var(--border-b);border-radius:var(--r3);
-  width:100%;max-width:500px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+  width:100%;max-width:480px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
 .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.mh span{font-family:var(--fc);font-size:12px;font-weight:700;color:var(--terracotta)}
+.mh span{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--text)}
+
+/* FORM INPUTS IN LOGIN MODAL */
+.form-grp{margin-bottom:14px}
+.form-grp label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--dim);margin-bottom:6px}
+.form-grp input{width:100%;padding:10px 12px;border-radius:var(--r1);border:1px solid var(--border);
+  background:var(--lift);font-family:var(--fb);font-size:13px;color:var(--text);outline:none}
+.form-grp input:focus{border-color:var(--terracotta);background:#fff}
+
+/* PRICING TIERS IN SUBSCRIPTION MODAL */
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.sub-card{background:var(--lift);border:1px solid var(--border);border-radius:var(--r1);padding:16px;text-align:center}
+.sub-card.pop{border-color:var(--terracotta);background:#fff;box-shadow:0 4px 14px var(--terracotta-g)}
+.sub-card h4{font-size:15px;font-weight:800;color:var(--text)}
+.sub-card .price{font-family:var(--fc);font-size:22px;font-weight:800;color:var(--terracotta);margin:8px 0}
+.sub-card p{font-size:11px;color:var(--dim);line-height:1.4;margin-bottom:12px}
 
 footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;background:var(--base)}
 .fi{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
@@ -210,31 +259,63 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
 <canvas id="particles"></canvas>
 
 <div class="rel">
-  <!-- HACKATHON WINNING NAVBAR -->
+  <!-- NAVIGATION BAR WITH HAMBURGER 3-LINES -->
   <nav>
     <div class="nav-i">
-      <div class="logo">
-        <div class="logo-ic">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <div class="nav-left">
+        <button class="menu-btn" onclick="toggleDrawer()" title="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="logo">
+          <div class="logo-ic">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <span>SELVEDGE <span class="ai-t">AI</span></span>
         </div>
-        <span>SELVEDGE <span class="ai-t">AI</span></span>
       </div>
 
-      <div class="sih-badge">
-        <span>🏆 SIH 2026 TOP FINALIST</span>
-      </div>
-
+      <!-- EXACTLY 3 CLEAN NAV LINKS -->
       <ul class="nav-links">
-        <li><a href="#studio">Inspector Workspace</a></li>
-        <li><a href="#report">Audit Ledger</a></li>
-        <li><a href="#tech" onclick="openTechModal()">Model Architecture</a></li>
+        <li><a href="#studio">Inspector</a></li>
+        <li><a href="#report">Audit Log</a></li>
+        <li><a href="#analytics" onclick="document.querySelector('.smart-analytics').scrollIntoView({behavior:'smooth'})">Analytics</a></li>
       </ul>
+
       <div class="nav-cta">
         <div class="pill p-on" id="sys-pill"><span class="dot"></span>ONLINE</div>
+        <button class="btn bgh" onclick="openLoginModal()">👤 Sign In</button>
         <button class="btn bg" onclick="document.getElementById('file-input').click()">📁 Select Swatch</button>
       </div>
     </div>
   </nav>
+
+  <!-- SLIDE-OUT LEFT MENU DRAWER -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="if(event.target===this)closeDrawer()">
+    <div class="drawer">
+      <div class="drawer-header">
+        <h3>SELVEDGE AI MENU</h3>
+        <button class="drawer-close" onclick="closeDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-user" onclick="closeDrawer();openLoginModal()">
+        <div class="u-ic">👤</div>
+        <div class="u-info">
+          <h4>Operator Portal</h4>
+          <p>Sign in to sync loom audit logs</p>
+        </div>
+      </div>
+
+      <ul class="drawer-menu">
+        <li><a href="#studio" onclick="closeDrawer()">🔍 Studio Inspector</a></li>
+        <li><a href="#report" onclick="closeDrawer()">📊 ASTM Audit Ledger</a></li>
+        <li><a href="#analytics" onclick="closeDrawer();document.querySelector('.smart-analytics').scrollIntoView({behavior:'smooth'})">📈 Live Signal Telemetry</a></li>
+        <li><a href="#" onclick="closeDrawer();openAboutModal()">ℹ️ About Platform</a></li>
+        <li><a href="#" onclick="closeDrawer();openSubModal()">💳 Subscription Plans</a></li>
+        <li><a href="#" onclick="closeDrawer();openTechModal()">📄 Neural Vision Specs</a></li>
+      </ul>
+    </div>
+  </div>
 
   <!-- MAIN HEADER -->
   <header class="hdr">
@@ -242,7 +323,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
       <div class="hdr-flex">
         <div class="hdr-title">
           <h1>Industrial Fabric Defect Inspection System</h1>
-          <p>Smart India Hackathon 2026 // Real-time Multi-Model Neural Vision & ASTM D5430 Quality Grading</p>
+          <p>Real-Time Multi-Model Neural Vision & ASTM D5430 Quality Audit Workspace</p>
         </div>
         <div style="display:flex;gap:10px">
           <span class="pill p-on" id="cam-pill"><span class="dot"></span>READY</span>
@@ -251,7 +332,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
     </div>
   </header>
 
-  <!-- STUDIO WORKBENCH (SMART DASHBOARD VIEWPORT) -->
+  <!-- STUDIO WORKBENCH (2-COLUMN DASHBOARD) -->
   <section class="studio" id="studio">
     <div class="con">
       <div class="wbench">
@@ -424,14 +505,73 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
   </section>
 </div>
 
-<!-- TECH MODAL -->
-<div class="mo" id="mo" onclick="if(event.target===this)this.classList.remove('open')">
+<!-- LOGIN MODAL -->
+<div class="mo" id="login-modal" onclick="if(event.target===this)closeModal('login-modal')">
   <div class="mb">
     <div class="mh">
-      <span id="mt" style="font-family:var(--fh);font-size:16px;color:var(--text)">Neural Architecture Specs</span>
-      <button onclick="document.getElementById('mo').classList.remove('open')" style="color:var(--dim);font-size:16px;background:none;border:none;cursor:pointer">✕</button>
+      <span>Operator Account Sign In</span>
+      <button onclick="closeModal('login-modal')" style="color:var(--dim);font-size:16px;background:none;border:none;cursor:pointer">✕</button>
     </div>
-    <div style="font-size:13px;color:var(--dim);line-height:1.7" id="md">
+    <form onsubmit="event.preventDefault();alert('Signed in successfully!');closeModal('login-modal')">
+      <div class="form-grp">
+        <label>Operator Email / ID</label>
+        <input type="email" placeholder="operator@textilemill.com" required>
+      </div>
+      <div class="form-grp">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" required>
+      </div>
+      <button class="btn bg" style="width:100%;padding:12px;margin-top:10px" type="submit">Sign In to Dashboard</button>
+    </form>
+  </div>
+</div>
+
+<!-- SUBSCRIPTION MODAL -->
+<div class="mo" id="sub-modal" onclick="if(event.target===this)closeModal('sub-modal')">
+  <div class="mb">
+    <div class="mh">
+      <span>Mill Subscription Plans</span>
+      <button onclick="closeModal('sub-modal')" style="color:var(--dim);font-size:16px;background:none;border:none;cursor:pointer">✕</button>
+    </div>
+    <div class="sub-grid">
+      <div class="sub-card">
+        <h4>Starter Mill</h4>
+        <div class="price">$49/mo</div>
+        <p>10,000 scans / mo<br>ASTM D5430 grading<br>Email reports</p>
+        <button class="btn bgh" style="width:100%" onclick="alert('Subscribed to Starter Tier!')">Select Tier</button>
+      </div>
+      <div class="sub-card pop">
+        <h4>Pro Loom</h4>
+        <div class="price">$149/mo</div>
+        <p>Unlimited scans<br>Live webcam stream<br>&lt;8ms latency</p>
+        <button class="btn bg" style="width:100%" onclick="alert('Subscribed to Pro Tier!')">Select Tier</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="mo" id="about-modal" onclick="if(event.target===this)closeModal('about-modal')">
+  <div class="mb">
+    <div class="mh">
+      <span>About Selvedge AI</span>
+      <button onclick="closeModal('about-modal')" style="color:var(--dim);font-size:16px;background:none;border:none;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:13px;color:var(--dim);line-height:1.7">
+      <p style="margin-bottom:10px">Selvedge AI is a world-class industrial fabric defect inspection platform designed for textile mills and automated looms.</p>
+      <p style="margin-bottom:10px">Combining YOLOv8 object detection and ResNet stain classification, the platform evaluates every fabric millimeter against the ASTM D5430 4-point grading system with sub-10ms latency.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TECH MODAL -->
+<div class="mo" id="mo" onclick="if(event.target===this)closeModal('mo')">
+  <div class="mb">
+    <div class="mh">
+      <span>Neural Architecture Specs</span>
+      <button onclick="closeModal('mo')" style="color:var(--dim);font-size:16px;background:none;border:none;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:13px;color:var(--dim);line-height:1.7">
       <p style="margin-bottom:10px"><strong>• YOLOv8 Defect Detector:</strong> Real-time single-pass object detection trained for fabric flaws (&lt; 8ms latency).</p>
       <p style="margin-bottom:10px"><strong>• ResNet-18 Stain Engine:</strong> Binary & multi-class classification for Oil vs. Water vs. Grease stains.</p>
       <p style="margin-bottom:10px"><strong>• Laplacian Texture Variance:</strong> High-precision surface anomaly thresholding compliant with ASTM D5430 standards.</p>
@@ -441,13 +581,28 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
 
 <footer>
   <div class="fi">
-    <p>SELVEDGE AI — Smart India Hackathon 2026 Winner Entry</p>
+    <p>SELVEDGE AI — Industrial Fabric Inspection Workspace</p>
     <p>ASTM D5430 · Multi-Model Neural Inspection · &lt; 8ms Latency</p>
   </div>
 </footer>
 
 <script>
 let report=null,conf=0.20,wcStr=null,stInt=null,frc=0,aCtx=null;
+
+// DRAWER TOGGLE
+function toggleDrawer(){
+  document.getElementById('drawer-overlay').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+// MODAL OPEN / CLOSE
+function openLoginModal(){closeDrawer();document.getElementById('login-modal').classList.add('open');}
+function openSubModal(){closeDrawer();document.getElementById('sub-modal').classList.add('open');}
+function openAboutModal(){closeDrawer();document.getElementById('about-modal').classList.add('open');}
+function openTechModal(){closeDrawer();document.getElementById('mo').classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 // HIGH-PERFORMANCE 3D DYNAMIC FABRIC RIBBON & CLOTH WEAVE SIMULATION CANVAS
 (function initSuper3DFabricCanvas(){
@@ -650,10 +805,6 @@ addEventListener('load',()=>{
   lp(null,'clean');
 });
 
-function openTechModal(){
-  document.getElementById('mo').classList.add('open');
-}
-
 function switchMode(m){
   document.getElementById('tab-upload').classList.toggle('active',m==='upload');
   document.getElementById('tab-cam').classList.toggle('active',m==='cam');
@@ -830,14 +981,6 @@ function drawOv(){
     c.fillStyle='#fff';c.font='bold 10px JetBrains Mono,monospace';
     c.fillText(lbl,rx+7,Math.max(14,ry-6));
   });
-}
-
-function openM(i){
-  if(!report?.defects?.[i])return;
-  const df=report.defects[i];
-  document.getElementById('mt').textContent=(df.id||'DEF-'+i)+': '+df.type.toUpperCase();
-  document.getElementById('md').innerHTML='<strong>Type:</strong> '+df.type+'<br><strong>Severity:</strong> '+(df.severity||'Minor')+'<br><strong>Confidence:</strong> '+(df.confidence*100).toFixed(2)+'%<br><strong>ASTM Penalty:</strong> '+(df.astm_points||1)+' points<br><strong>Bbox:</strong> ['+(df.bbox||'N/A')+']<br><strong>Remediation:</strong> '+df.action;
-  document.getElementById('mo').classList.add('open');
 }
 
 function chime(pass){
