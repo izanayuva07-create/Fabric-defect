@@ -8,7 +8,7 @@ HTML = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SELVEDGE AI — Industrial Fabric Inspection Platform</title>
-<meta name="description" content="Selvedge AI Automated Fabric Defect Inspection Platform. Multi-model neural vision, 3D fabric showcase, ASTM D5430 quality grading, advantages, features, and live loom inspection.">
+<meta name="description" content="Selvedge AI Automated Fabric Defect Inspection Platform. Multi-model neural vision, 3D fabric showcase, ASTM D5430 quality grading, live webcam stream, user login, and subscription tiers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -105,71 +105,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
   color:var(--text);text-decoration:none;font-weight:600;font-size:13px;transition:all .15s}
 .drawer-menu a:hover{background:var(--lift);color:var(--terracotta)}
 
-/* HERO HOME PAGE SECTION */
-.hero{padding:120px 0 60px;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;
-  background:var(--lift);border:1px solid var(--border);font-family:var(--fc);font-size:11px;
-  font-weight:700;color:var(--terracotta);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
-.hero h1{font-family:var(--fh);font-size:48px;font-weight:800;line-height:1.15;color:var(--text);
-  max-width:900px;margin:0 auto 18px}
-.hero p{font-size:17px;color:var(--dim);max-width:760px;margin:0 auto 32px;line-height:1.6}
-.hero-ctas{display:flex;justify-content:center;gap:16px}
+/* MAIN WORKSPACE HEADER (FIRST MAIN SECTION) */
+.hdr{padding:84px 0 16px}
+.hdr-flex{display:flex;justify-content:space-between;align-items:flex-end}
+.hdr-title h1{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text)}
+.hdr-title p{font-size:13px;color:var(--dim);margin-top:2px}
 
-/* 3 FABRIC IMAGES SHOWCASE GALLERY */
-.fabric-showcase{padding:40px 0 60px}
-.sec-head{text-align:center;margin-bottom:36px}
-.sec-head h2{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text)}
-.sec-head p{font-size:14px;color:var(--dim);margin-top:6px}
-
-.fab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fab-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;
-  box-shadow:0 8px 30px rgba(0,0,0,0.04);transition:all .3s ease;display:flex;flex-direction:column}
-.fab-card:hover{transform:translateY(-6px);border-color:var(--terracotta);box-shadow:0 14px 40px rgba(194,65,12,0.12)}
-.fab-img-wrap{position:relative;height:240px;overflow:hidden;background:#1C1917}
-.fab-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.fab-card:hover .fab-img-wrap img{transform:scale(1.06)}
-.fab-tag{position:absolute;top:14px;left:14px;background:rgba(28,25,23,0.85);backdrop-filter:blur(8px);
-  color:#fff;font-family:var(--fc);font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;
-  text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,0.2)}
-.fab-body{padding:20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-.fab-body h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
-.fab-body p{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:16px}
-
-/* PARAGRAPHS ABOUT FABRIC DEFECTS SECTION */
-.defects-info{padding:60px 0;background:var(--lift);border_top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.def-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.def-text h2{font-family:var(--fh);font-size:32px;font-weight:800;color:var(--text);margin-bottom:16px}
-.def-text p{font-size:15px;color:var(--dim);line-height:1.7;margin-bottom:16px}
-.def-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
-.def-box h4{font-family:var(--fc);font-size:12px;font-weight:700;color:var(--terracotta);text-transform:uppercase;
-  letter-spacing:1px;margin-bottom:12px}
-.def-box ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.def-box li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text)}
-.def-box li span{color:var(--terracotta);font-weight:800}
-
-/* ADVANTAGES OF OUR WEBPAGE SECTION */
-.advantages{padding:70px 0}
-.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
-.adv-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:28px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.03);transition:all .25s ease}
-.adv-card:hover{border-color:var(--terracotta);transform:translateY(-4px)}
-.adv-ic{width:48px;height:48px;border-radius:12px;background:var(--terracotta-g);color:var(--terracotta);
-  display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;font-weight:800}
-.adv-card h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
-.adv-card p{font-size:13px;color:var(--dim);line-height:1.6}
-
-/* FEATURES WE PROVIDE SECTION */
-.features-sec{padding:70px 0;background:var(--base);border-top:1px solid var(--border)}
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
-.feat-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
-.feat-card .num{font-family:var(--fc);font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
-.feat-card h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px}
-.feat-card p{font-size:13px;color:var(--dim);line-height:1.5}
-
-/* STUDIO WORKBENCH GRID (2-COLUMN DASHBOARD) */
-.studio{padding:40px 0 60px}
+/* STUDIO WORKBENCH GRID (FIRST MAIN SECTION) */
+.studio{padding:10px 0 40px}
 .wbench{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}
 
 /* CONTROL PANEL */
@@ -246,6 +189,59 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
 .smart-analytics-h h4{font-family:var(--fc);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--terracotta)}
 #sig-cv{width:100%;height:60px;background:var(--lift);border-radius:8px;display:block}
 
+/* 3 UNCHANGED TRAINED FABRIC IMAGES SHOWCASE GALLERY */
+.fabric-showcase{padding:40px 0 50px}
+.sec-head{text-align:center;margin-bottom:30px}
+.sec-head h2{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--text)}
+.sec-head p{font-size:13px;color:var(--dim);margin-top:4px}
+
+.fab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.fab-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,0.04);transition:all .3s ease;display:flex;flex-direction:column}
+.fab-card:hover{transform:translateY(-6px);border-color:var(--terracotta);box-shadow:0 14px 40px rgba(194,65,12,0.12)}
+.fab-img-wrap{position:relative;height:220px;overflow:hidden;background:#1C1917}
+.fab-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.fab-card:hover .fab-img-wrap img{transform:scale(1.06)}
+.fab-tag{position:absolute;top:14px;left:14px;background:rgba(28,25,23,0.85);backdrop-filter:blur(8px);
+  color:#fff;font-family:var(--fc);font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;
+  text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,0.2)}
+.fab-body{padding:20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.fab-body h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px}
+.fab-body p{font-size:12px;color:var(--dim);line-height:1.5;margin-bottom:14px}
+
+/* PARAGRAPHS ABOUT FABRIC DEFECTS SECTION */
+.defects-info{padding:50px 0;background:var(--lift);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.def-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.def-text h2{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text);margin-bottom:14px}
+.def-text p{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:14px}
+.def-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
+.def-box h4{font-family:var(--fc);font-size:11px;font-weight:700;color:var(--terracotta);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:12px}
+.def-box ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.def-box li{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--text)}
+.def-box li span{color:var(--terracotta);font-weight:800}
+
+/* ADVANTAGES OF OUR WEBPAGE SECTION */
+.advantages{padding:60px 0}
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:30px}
+.adv-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.03);transition:all .25s ease}
+.adv-card:hover{border-color:var(--terracotta);transform:translateY(-4px)}
+.adv-ic{width:44px;height:44px;border-radius:12px;background:var(--terracotta-g);color:var(--terracotta);
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;font-weight:800}
+.adv-card h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px}
+.adv-card p{font-size:12px;color:var(--dim);line-height:1.6}
+
+/* FEATURES WE PROVIDE SECTION */
+.features-sec{padding:60px 0;background:var(--base);border-top:1px solid var(--border)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:30px}
+.feat-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
+.feat-card .num{font-family:var(--fc);font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.feat-card h3{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
+.feat-card p{font-size:12px;color:var(--dim);line-height:1.5}
+
 /* REPORT SECTION */
 .rep-sec{padding:24px 0 60px}
 .rep-grid{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
@@ -302,7 +298,7 @@ tr:last-child td{border-bottom:none}
 .sub-card .price{font-family:var(--fc);font-size:22px;font-weight:800;color:var(--terracotta);margin:8px 0}
 .sub-card p{font-size:11px;color:var(--dim);line-height:1.4;margin-bottom:12px}
 
-footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;background:var(--base)}
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:40px;background:var(--base)}
 .fi{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
   align-items:center;font-size:11px;color:var(--ghost);font-family:var(--fc);font-weight:600}
 </style>
@@ -329,17 +325,17 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
       </div>
 
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#defects-info">Fabric Defects</a></li>
+        <li><a href="#studio">Inspector</a></li>
+        <li><a href="#showcase">3 Swatches</a></li>
+        <li><a href="#defects-info">Defect Guide</a></li>
         <li><a href="#advantages">Advantages</a></li>
         <li><a href="#features">Features</a></li>
-        <li><a href="#studio">AI Inspector</a></li>
       </ul>
 
       <div class="nav-cta">
         <div class="pill p-on" id="sys-pill"><span class="dot"></span>ONLINE</div>
         <button class="btn bgh" onclick="openLoginModal()">👤 Sign In</button>
-        <a class="btn bg" href="#studio">🚀 Launch Inspector</a>
+        <button class="btn bg" onclick="document.getElementById('file-input').click()">📁 Select Swatch</button>
       </div>
     </div>
   </nav>
@@ -361,12 +357,11 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
       </div>
 
       <ul class="drawer-menu">
-        <li><a href="#home" onclick="closeDrawer()">🏠 Home Overview</a></li>
+        <li><a href="#studio" onclick="closeDrawer()">🔍 Studio Inspector</a></li>
         <li><a href="#showcase" onclick="closeDrawer()">🧵 3 Fabric Swatches</a></li>
         <li><a href="#defects-info" onclick="closeDrawer()">📖 Fabric Defect Guide</a></li>
         <li><a href="#advantages" onclick="closeDrawer()">⚡ Platform Advantages</a></li>
         <li><a href="#features" onclick="closeDrawer()">🛠️ Key System Features</a></li>
-        <li><a href="#studio" onclick="closeDrawer()">🔍 Studio Inspector</a></li>
         <li><a href="#report" onclick="closeDrawer()">📊 ASTM Audit Ledger</a></li>
         <li><a href="#" onclick="closeDrawer();openAboutModal()">ℹ️ About Platform</a></li>
         <li><a href="#" onclick="closeDrawer();openSubModal()">💳 Subscription Plans</a></li>
@@ -374,25 +369,160 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
     </div>
   </div>
 
-  <!-- HOME PAGE HERO SECTION -->
-  <section class="hero" id="home">
+  <!-- MAIN WORKSPACE HEADER (FIRST MAIN SECTION AT TOP) -->
+  <header class="hdr" id="studio">
     <div class="con">
-      <div class="hero-badge">✨ Next-Generation Textile Intelligence</div>
-      <h1>Automated Industrial Fabric Defect Inspection Platform</h1>
-      <p>Powered by <strong>SELVEDGE AI</strong> multi-model neural vision, real-time webcam streaming, and ASTM D5430 4-point quality auditing to eliminate textile mill waste and ensure zero-defect fabric rolls.</p>
-      <div class="hero-ctas">
-        <a class="btn bg" href="#studio">🔍 Open AI Inspector</a>
-        <a class="btn bgh" href="#showcase">🧵 View 3 Fabric Swatches</a>
+      <div class="hdr-flex">
+        <div class="hdr-title">
+          <h1>Industrial Fabric Defect Inspection System</h1>
+          <p>SELVEDGE AI Real-Time Multi-Model Neural Vision & ASTM D5430 Quality Audit Workspace</p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <span class="pill p-on" id="cam-pill"><span class="dot"></span>READY</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STUDIO WORKBENCH (FIRST MAIN WORKSPACE SECTION) -->
+  <section class="studio">
+    <div class="con">
+      <div class="wbench">
+        <!-- CONTROL PANEL -->
+        <div class="cp">
+          <div class="cp-h">
+            <span>Inspector Controls</span>
+            <span>⚙️</span>
+          </div>
+          <div class="cp-b">
+            <!-- MODE TABS -->
+            <div class="mode-selector">
+              <div class="mode-tab active" id="tab-upload" onclick="switchMode('upload');document.getElementById('file-input').click()">📁 File Upload</div>
+              <div class="mode-tab" id="tab-cam" onclick="switchMode('cam')">📷 Live Camera</div>
+            </div>
+
+            <!-- SLIDER -->
+            <div class="cg">
+              <div class="cl">
+                <span>Confidence Threshold</span>
+                <span class="v" id="tv">0.20</span>
+              </div>
+              <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.20" oninput="onTh(this.value)">
+            </div>
+
+            <!-- UNCHANGED SAMPLE TRAINED DATASET PRESETS -->
+            <div class="cg">
+              <div class="cl"><span>Sample Defect Swatches</span></div>
+              <div class="pgrid">
+                <button class="pchip cln act" onclick="lp(event,'clean')">✨ Clean (Pass)</button>
+                <button class="pchip" onclick="lp(event,'stain')">💧 Fabric Stain</button>
+                <button class="pchip" onclick="lp(event,'thread')">🧶 Thread Error</button>
+                <button class="pchip" onclick="lp(event,'hole')">🕳️ Tear / Hole</button>
+                <button class="pchip" onclick="lp(event,'oil')">🛢️ Oil Spot</button>
+                <button class="pchip" onclick="lp(event,'stitch')">🪡 Broken Stitch</button>
+                <button class="pchip" onclick="lp(event,'lines')">🧵 Reed Lines</button>
+              </div>
+            </div>
+
+            <!-- TOGGLES -->
+            <div class="cg">
+              <div class="cl"><span>Display Overlay</span></div>
+              <div class="trow">
+                <span class="tl">Bounding Boxes</span>
+                <div class="tgl on" id="tg-b" onclick="this.classList.toggle('on');drawOv()"></div>
+              </div>
+              <div class="trow">
+                <span class="tl">Laser Scan Beam</span>
+                <div class="tgl on" id="tg-s" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="trow">
+                <span class="tl">Audio Alert Chime</span>
+                <div class="tgl on" id="tg-a" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+              <button class="btn bg" id="predict-btn" style="width:100%" onclick="rescan()">🔍 Re-Scan Surface</button>
+              <button class="btn bg" id="btn-oc" style="width:100%" onclick="switchMode('cam')">📷 Start Webcam Stream</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STAGE -->
+        <div>
+          <div class="stage">
+            <div class="st-bar">
+              <div class="st-info">
+                <span>Status: <strong id="ts" style="color:var(--green)">PASS — CLEAN</strong></span>
+                <span>Latency: <strong id="tl">0ms</strong></span>
+                <span>Res: <strong id="ir">800x600</strong></span>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn bgh" style="padding:4px 10px;font-size:11px" onclick="document.getElementById('file-input').click()">📁 Select Image</button>
+                <button class="btn bgh" style="padding:4px 10px;font-size:11px" onclick="dlSnap()">💾 Export Frame</button>
+              </div>
+            </div>
+
+            <div class="st-vp" id="stage">
+              <img id="ins-img" src="/test_clean.jpg" alt="Fabric Scan" crossorigin="anonymous">
+              <canvas id="ov-cv"></canvas>
+              <canvas id="sw-cv"></canvas>
+
+              <video id="wv" style="display:none" autoplay playsinline muted></video>
+              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(event)">
+
+              <!-- WEBCAM CONTROL BAR -->
+              <div class="cam-ctrl-bar" id="cam-ctrl-bar" style="display:none">
+                <button class="btn bg" id="btn-sn" onclick="captureSnapshot()">📸 Snapshot & Scan</button>
+                <button class="btn br" id="btn-st" onclick="toggleStream()">🔴 Continuous Stream</button>
+                <button class="btn bgh" id="btn-sc" onclick="stopWebcam()">⏹ Close Stream</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULTS HUD -->
+          <div class="hud">
+            <div class="hcard">
+              <div class="hl">Total Flaws</div>
+              <div class="hv" id="td" style="color:var(--text)">0</div>
+              <div class="hs">Counted in current frame</div>
+            </div>
+            <div class="hcard">
+              <div class="hl">ASTM D5430 Points</div>
+              <div class="hv" id="al" style="color:var(--terracotta)">0</div>
+              <div class="hs">Points / 100 sq yds</div>
+            </div>
+            <div class="hcard">
+              <div class="hl">Grade Standard</div>
+              <div class="hv" id="gt" style="color:var(--green);font-size:17px">GRADE A</div>
+              <div class="hs" id="rg">GRADE A — PERFECT PASS</div>
+            </div>
+            <div class="hcard">
+              <div class="hl">Frames Scanned</div>
+              <div class="hv" id="fc" style="color:var(--dim)">0</div>
+              <div class="hs">Total roll frames</div>
+            </div>
+          </div>
+
+          <!-- SMART ANALYTICS TELEMETRY / WEAVE VARIANCE HEATMAP -->
+          <div class="smart-analytics">
+            <div class="smart-analytics-h">
+              <h4>Real-Time Weave Anomaly & Defect Telemetry Signal</h4>
+              <span style="font-family:var(--fc);font-size:10px;color:var(--dim)">PIXEL VARIANCE // ASTM D5430 WAVE</span>
+            </div>
+            <canvas id="sig-cv"></canvas>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 3 FABRIC IMAGES SHOWCASE GALLERY -->
+  <!-- 3 UNCHANGED TRAINED FABRIC IMAGES SHOWCASE GALLERY -->
   <section class="fabric-showcase" id="showcase">
     <div class="con">
       <div class="sec-head">
         <h2>3 High-Resolution Fabric Inspection Swatches</h2>
-        <p>Explore real-world trained textile samples evaluated by our neural inspection engine</p>
+        <p>Explore real-world trained textile samples evaluated by SELVEDGE AI neural vision</p>
       </div>
 
       <div class="fab-grid">
@@ -548,154 +678,6 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
           <div class="num">FEATURE 06</div>
           <h3>One-Click Frame & CSV Report Export</h3>
           <p>Export complete inspection histories to CSV spreadsheet format and download full-resolution image frame snapshots instantaneously.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAIN WORKSPACE HEADER -->
-  <header class="hdr">
-    <div class="con">
-      <div class="hdr-flex">
-        <div class="hdr-title">
-          <h1>Live AI Fabric Inspection Workbench</h1>
-          <p>Test real-time neural vision and ASTM D5430 quality auditing below</p>
-        </div>
-        <div style="display:flex;gap:10px">
-          <span class="pill p-on" id="cam-pill"><span class="dot"></span>READY</span>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- STUDIO WORKBENCH (2-COLUMN DASHBOARD) -->
-  <section class="studio" id="studio">
-    <div class="con">
-      <div class="wbench">
-        <!-- CONTROL PANEL -->
-        <div class="cp">
-          <div class="cp-h">
-            <span>Inspector Controls</span>
-            <span>⚙️</span>
-          </div>
-          <div class="cp-b">
-            <!-- MODE TABS -->
-            <div class="mode-selector">
-              <div class="mode-tab active" id="tab-upload" onclick="switchMode('upload');document.getElementById('file-input').click()">📁 File Upload</div>
-              <div class="mode-tab" id="tab-cam" onclick="switchMode('cam')">📷 Live Camera</div>
-            </div>
-
-            <!-- SLIDER -->
-            <div class="cg">
-              <div class="cl">
-                <span>Confidence Threshold</span>
-                <span class="v" id="tv">0.20</span>
-              </div>
-              <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.20" oninput="onTh(this.value)">
-            </div>
-
-            <!-- REAL DATASET PRESETS -->
-            <div class="cg">
-              <div class="cl"><span>Sample Defect Swatches</span></div>
-              <div class="pgrid">
-                <button class="pchip cln act" onclick="lp(event,'clean')">✨ Clean (Pass)</button>
-                <button class="pchip" onclick="lp(event,'stain')">💧 Fabric Stain</button>
-                <button class="pchip" onclick="lp(event,'thread')">🧶 Thread Error</button>
-                <button class="pchip" onclick="lp(event,'hole')">🕳️ Tear / Hole</button>
-                <button class="pchip" onclick="lp(event,'oil')">🛢️ Oil Spot</button>
-                <button class="pchip" onclick="lp(event,'stitch')">🪡 Broken Stitch</button>
-                <button class="pchip" onclick="lp(event,'lines')">🧵 Reed Lines</button>
-              </div>
-            </div>
-
-            <!-- TOGGLES -->
-            <div class="cg">
-              <div class="cl"><span>Display Overlay</span></div>
-              <div class="trow">
-                <span class="tl">Bounding Boxes</span>
-                <div class="tgl on" id="tg-b" onclick="this.classList.toggle('on');drawOv()"></div>
-              </div>
-              <div class="trow">
-                <span class="tl">Laser Scan Beam</span>
-                <div class="tgl on" id="tg-s" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="trow">
-                <span class="tl">Audio Alert Chime</span>
-                <div class="tgl on" id="tg-a" onclick="this.classList.toggle('on')"></div>
-              </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-              <button class="btn bg" id="predict-btn" style="width:100%" onclick="rescan()">🔍 Re-Scan Surface</button>
-              <button class="btn bg" id="btn-oc" style="width:100%" onclick="switchMode('cam')">📷 Start Webcam Stream</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- STAGE -->
-        <div>
-          <div class="stage">
-            <div class="st-bar">
-              <div class="st-info">
-                <span>Status: <strong id="ts" style="color:var(--green)">PASS — CLEAN</strong></span>
-                <span>Latency: <strong id="tl">0ms</strong></span>
-                <span>Res: <strong id="ir">800x600</strong></span>
-              </div>
-              <div style="display:flex;gap:8px">
-                <button class="btn bgh" style="padding:4px 10px;font-size:11px" onclick="document.getElementById('file-input').click()">📁 Select Image</button>
-                <button class="btn bgh" style="padding:4px 10px;font-size:11px" onclick="dlSnap()">💾 Export Frame</button>
-              </div>
-            </div>
-
-            <div class="st-vp" id="stage">
-              <img id="ins-img" src="/test_clean.jpg" alt="Fabric Scan" crossorigin="anonymous">
-              <canvas id="ov-cv"></canvas>
-              <canvas id="sw-cv"></canvas>
-
-              <video id="wv" style="display:none" autoplay playsinline muted></video>
-              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(event)">
-
-              <!-- WEBCAM CONTROL BAR -->
-              <div class="cam-ctrl-bar" id="cam-ctrl-bar" style="display:none">
-                <button class="btn bg" id="btn-sn" onclick="captureSnapshot()">📸 Snapshot & Scan</button>
-                <button class="btn br" id="btn-st" onclick="toggleStream()">🔴 Continuous Stream</button>
-                <button class="btn bgh" id="btn-sc" onclick="stopWebcam()">⏹ Close Stream</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- RESULTS HUD -->
-          <div class="hud">
-            <div class="hcard">
-              <div class="hl">Total Flaws</div>
-              <div class="hv" id="td" style="color:var(--text)">0</div>
-              <div class="hs">Counted in current frame</div>
-            </div>
-            <div class="hcard">
-              <div class="hl">ASTM D5430 Points</div>
-              <div class="hv" id="al" style="color:var(--terracotta)">0</div>
-              <div class="hs">Points / 100 sq yds</div>
-            </div>
-            <div class="hcard">
-              <div class="hl">Grade Standard</div>
-              <div class="hv" id="gt" style="color:var(--green);font-size:17px">GRADE A</div>
-              <div class="hs" id="rg">GRADE A — PERFECT PASS</div>
-            </div>
-            <div class="hcard">
-              <div class="hl">Frames Scanned</div>
-              <div class="hv" id="fc" style="color:var(--dim)">0</div>
-              <div class="hs">Total roll frames</div>
-            </div>
-          </div>
-
-          <!-- SMART ANALYTICS TELEMETRY / WEAVE VARIANCE HEATMAP -->
-          <div class="smart-analytics">
-            <div class="smart-analytics-h">
-              <h4>Real-Time Weave Anomaly & Defect Telemetry Signal</h4>
-              <span style="font-family:var(--fc);font-size:10px;color:var(--dim)">PIXEL VARIANCE // ASTM D5430 WAVE</span>
-            </div>
-            <canvas id="sig-cv"></canvas>
-          </div>
         </div>
       </div>
     </div>
