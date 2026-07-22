@@ -101,46 +101,57 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
   color:var(--text);text-decoration:none;font-weight:600;font-size:13px;transition:all .15s}
 .drawer-menu a:hover{background:var(--lift);color:var(--terracotta)}
 
-/* HOME PAGE HERO SECTION */
-.hero{padding:120px 0 60px;text-align:center}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;
-  background:var(--lift);border:1px solid var(--border);font-family:var(--fc);font-size:11px;
-  font-weight:700;color:var(--terracotta);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
-.hero h1{font-family:var(--fh);font-size:48px;font-weight:800;line-height:1.15;color:var(--text);
-  max-width:900px;margin:0 auto 18px}
+/* 3D HOME PAGE HERO SECTION */
+.hero{padding:120px 0 50px;text-align:center;perspective:1000px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:99px;
+  background:var(--panel);border:1px solid var(--border-b);font-family:var(--fc);font-size:11px;
+  font-weight:700;color:var(--terracotta);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px;
+  box-shadow:0 10px 30px rgba(194,65,12,0.08);transform:translateZ(10px)}
+.hero h1{font-family:var(--fh);font-size:52px;font-weight:800;line-height:1.15;color:var(--text);
+  max-width:920px;margin:0 auto 18px;letter-spacing:-0.5px}
 .hero p{font-size:17px;color:var(--dim);max-width:760px;margin:0 auto 32px;line-height:1.6}
 .hero-ctas{display:flex;justify-content:center;gap:16px}
 
-/* 3 UNCHANGED TRAINED FABRIC IMAGES SHOWCASE GALLERY */
-.fabric-showcase{padding:40px 0 60px}
+/* 3D STATS BADGES BAR */
+.hero-stats{display:flex;justify-content:center;gap:24px;margin-top:40px}
+.hstat-chip{background:var(--panel);border:1px solid var(--border);padding:10px 20px;border-radius:var(--r2);
+  display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.03);
+  transform:translateZ(15px);transition:transform .2s ease}
+.hstat-chip:hover{transform:translateZ(25px) translateY(-2px);border-color:var(--terracotta)}
+.hstat-chip .val{font-family:var(--fc);font-size:18px;font-weight:800;color:var(--terracotta)}
+.hstat-chip .lbl{font-size:11px;color:var(--dim);font-weight:600}
+
+/* 3D INTERACTIVE FABRIC CARDS SHOWCASE GALLERY */
+.fabric-showcase{padding:40px 0 60px;perspective:1200px}
 .sec-head{text-align:center;margin-bottom:36px}
-.sec-head h2{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text)}
+.sec-head h2{font-family:var(--fh);font-size:32px;font-weight:800;color:var(--text)}
 .sec-head p{font-size:14px;color:var(--dim);margin-top:6px}
 
-.fab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fab-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;
-  box-shadow:0 8px 30px rgba(0,0,0,0.04);transition:all .3s ease;display:flex;flex-direction:column}
-.fab-card:hover{transform:translateY(-6px);border-color:var(--terracotta);box-shadow:0 14px 40px rgba(194,65,12,0.12)}
-.fab-img-wrap{position:relative;height:240px;overflow:hidden;background:#1C1917}
+.fab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.fab-card-3d{background:var(--panel);border:1px solid var(--border);border-radius:var(--r3);overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,0.05);transition:transform .15s ease-out, box-shadow .3s ease, border-color .3s ease;
+  transform-style:preserve-3d;display:flex;flex-direction:column;position:relative}
+.fab-card-3d:hover{border-color:var(--terracotta);box-shadow:0 24px 60px rgba(194,65,12,0.16)}
+.fab-img-wrap{position:relative;height:250px;overflow:hidden;background:#1C1917;transform:translateZ(10px)}
 .fab-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.fab-card:hover .fab-img-wrap img{transform:scale(1.06)}
+.fab-card-3d:hover .fab-img-wrap img{transform:scale(1.08)}
 .fab-tag{position:absolute;top:14px;left:14px;background:rgba(28,25,23,0.85);backdrop-filter:blur(8px);
-  color:#fff;font-family:var(--fc);font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;
-  text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,0.2)}
-.fab-body{padding:20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-.fab-body h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
-.fab-body p{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:16px}
+  color:#fff;font-family:var(--fc);font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;
+  text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,0.2);transform:translateZ(25px)}
+.fab-body{padding:24px;flex:1;display:flex;flex-direction:column;justify-content:space-between;transform:translateZ(15px)}
+.fab-body h3{font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px}
+.fab-body p{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:18px}
 
 /* PARAGRAPHS ABOUT FABRIC DEFECTS SECTION */
 .defects-info{padding:60px 0;background:var(--lift);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .def-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .def-text h2{font-family:var(--fh);font-size:32px;font-weight:800;color:var(--text);margin-bottom:16px}
 .def-text p{font-size:15px;color:var(--dim);line-height:1.7;margin-bottom:16px}
-.def-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
+.def-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:26px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.03)}
 .def-box h4{font-family:var(--fc);font-size:12px;font-weight:700;color:var(--terracotta);text-transform:uppercase;
-  letter-spacing:1px;margin-bottom:12px}
-.def-box ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  letter-spacing:1px;margin-bottom:14px}
+.def-box ul{list-style:none;display:flex;flex-direction:column;gap:12px}
 .def-box li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text)}
 .def-box li span{color:var(--terracotta);font-weight:800}
 
@@ -353,20 +364,37 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
     </div>
   </div>
 
-  <!-- HOME PAGE HERO SECTION -->
+  <!-- 3D HOME PAGE HERO SECTION -->
   <section class="hero" id="home">
     <div class="con">
-      <div class="hero-badge">✨ Next-Generation Textile Intelligence</div>
+      <div class="hero-badge">✨ 3D NEURAL SURFACE VISION ENGINE</div>
       <h1>Automated Industrial Fabric Defect Inspection Platform</h1>
       <p>Powered by <strong>SELVEDGE AI</strong> multi-model neural vision, real-time webcam streaming, and ASTM D5430 4-point quality auditing to eliminate textile mill waste and ensure zero-defect fabric rolls.</p>
+      
       <div class="hero-ctas">
         <a class="btn bg" href="#studio">🚀 Launch AI Inspector</a>
         <a class="btn bgh" href="#showcase">🧵 View 3 Fabric Swatches</a>
       </div>
+
+      <!-- 3D FLOATING STATS BAR -->
+      <div class="hero-stats">
+        <div class="hstat-chip">
+          <span class="val">&lt;8ms</span>
+          <span class="lbl">Neural Latency</span>
+        </div>
+        <div class="hstat-chip">
+          <span class="val">99.4%</span>
+          <span class="lbl">Inspection Precision</span>
+        </div>
+        <div class="hstat-chip">
+          <span class="val">ASTM D5430</span>
+          <span class="lbl">4-Point Compliance</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 3 UNCHANGED TRAINED FABRIC IMAGES SHOWCASE GALLERY -->
+  <!-- 3D INTERACTIVE FABRIC CARDS SHOWCASE GALLERY -->
   <section class="fabric-showcase" id="showcase">
     <div class="con">
       <div class="sec-head">
@@ -376,7 +404,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
 
       <div class="fab-grid">
         <!-- FABRIC 1: BLUE LIQUID STAIN -->
-        <div class="fab-card">
+        <div class="fab-card-3d" onmousemove="tilt3D(event, this)" onmouseleave="reset3D(this)">
           <div class="fab-img-wrap">
             <span class="fab-tag">01 · Liquid Stain</span>
             <img src="/ref_stain.jpg" alt="Blue Fabric Liquid Stain Swatch">
@@ -391,7 +419,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
         </div>
 
         <!-- FABRIC 2: WOVEN THREAD ERROR -->
-        <div class="fab-card">
+        <div class="fab-card-3d" onmousemove="tilt3D(event, this)" onmouseleave="reset3D(this)">
           <div class="fab-img-wrap">
             <span class="fab-tag">02 · Thread Error</span>
             <img src="/ref_thread_error.jpg" alt="Woven Fabric Thread Error Swatch">
@@ -406,7 +434,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
         </div>
 
         <!-- FABRIC 3: DENIM TEAR & HOLE -->
-        <div class="fab-card">
+        <div class="fab-card-3d" onmousemove="tilt3D(event, this)" onmouseleave="reset3D(this)">
           <div class="fab-img-wrap">
             <span class="fab-tag">03 · Structural Tear</span>
             <img src="/ref_hole.jpg" alt="Denim Fabric Hole & Tear Swatch">
@@ -715,6 +743,24 @@ function openLoginModal(){closeDrawer();document.getElementById('login-modal').c
 function openSubModal(){closeDrawer();document.getElementById('sub-modal').classList.add('open');}
 function openAboutModal(){closeDrawer();document.getElementById('about-modal').classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+/* 3D CARD TILT PARALLAX INTERACTION */
+function tilt3D(e, card) {
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  
+  const rotateX = ((y - centerY) / centerY) * -12;
+  const rotateY = ((x - centerX) / centerX) * 12;
+  
+  card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(10px)`;
+}
+
+function reset3D(card) {
+  card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+}
 
 (function initSuper3DFabricCanvas(){
   const cv=document.getElementById('particles');if(!cv)return;
