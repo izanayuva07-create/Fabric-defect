@@ -8,7 +8,7 @@ HTML = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SELVEDGE AI — Industrial Fabric Inspection Platform</title>
-<meta name="description" content="AI Fabric Defect Inspection Platform with real-time multi-model vision, ASTM D5430 quality grading, live webcam stream, user login, and subscription tiers.">
+<meta name="description" content="AI Fabric Defect Inspection Platform with real-time multi-model vision, trained dataset reference swatches, ASTM D5430 quality grading, live webcam stream, user login, and subscription tiers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -143,7 +143,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
   border-radius:6px;cursor:pointer;transition:all .2s;color:var(--dim)}
 .mode-tab.active{background:var(--terracotta);color:#fff;box-shadow:0 3px 10px var(--terracotta-g)}
 
-/* PRESETS GRID */
+/* PRESETS GRID WITH TRAINED DATASET REFERENCE IMAGES */
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .pchip{background:var(--lift);border:1px solid var(--border);color:var(--text);
   font-size:11px;font-weight:600;padding:8px 10px;border-radius:8px;
@@ -358,16 +358,17 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
               <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.20" oninput="onTh(this.value)">
             </div>
 
-            <!-- REAL FABRIC PRESETS -->
+            <!-- REAL TRAINED DATASET REFERENCE PRESETS -->
             <div class="cg">
-              <div class="cl"><span>Sample Defect Swatches</span></div>
+              <div class="cl"><span>Trained Dataset Swatches</span></div>
               <div class="pgrid">
                 <button class="pchip cln act" onclick="lp(event,'clean')">✨ Clean (Pass)</button>
-                <button class="pchip" onclick="lp(event,'stain')">🛢️ Oil Stain</button>
-                <button class="pchip" onclick="lp(event,'water')">💧 Water Stain</button>
+                <button class="pchip" onclick="lp(event,'oil')">🛢️ Oil Spot</button>
+                <button class="pchip" onclick="lp(event,'stain')">💧 Fabric Stain</button>
                 <button class="pchip" onclick="lp(event,'hole')">🕳️ Tear / Hole</button>
-                <button class="pchip" onclick="lp(event,'slub')">🧶 Slub & Weave</button>
-                <button class="pchip" onclick="lp(event,'sample')">🧵 Fabric Roll</button>
+                <button class="pchip" onclick="lp(event,'thread')">🧶 Thread Error</button>
+                <button class="pchip" onclick="lp(event,'stitch')">🪡 Broken Stitch</button>
+                <button class="pchip" onclick="lp(event,'lines')">🧵 Reed Lines</button>
               </div>
             </div>
 
@@ -791,14 +792,15 @@ function animSw(){
 }
 animSw();
 
-// REAL FABRIC SAMPLE PRESET MAP & PRESET LOADER
+// OFFICIAL TRAINED DATASET REFERENCE PRESET MAP & PRESET LOADER
 const PRESETS = {
   'clean': '/test_clean.jpg',
-  'stain': '/test_oil.jpg',
-  'water': '/test_water.jpg',
-  'hole': '/test_hole.jpg',
-  'slub': '/test_detected.jpg',
-  'sample': '/sample.jpg'
+  'oil': '/ref_oil_spot.png',
+  'stain': '/ref_stain.jpg',
+  'hole': '/ref_hole.png',
+  'thread': '/ref_thread_error.png',
+  'stitch': '/ref_broken_stitch.jpg',
+  'lines': '/ref_lines.jpg'
 };
 
 addEventListener('load',()=>{
