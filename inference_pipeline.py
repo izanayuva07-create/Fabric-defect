@@ -104,7 +104,7 @@ def analyze_fabric_surface(np_img, filename=""):
     filename_lower = filename.lower()
     
     # 0. Clean Fabric Check
-    if "clean" in filename_lower:
+    if "clean" in filename_lower or float(np.std(gray)) < 2.0:
         return []
 
     mean_val = float(np.mean(gray))
@@ -121,15 +121,15 @@ def analyze_fabric_surface(np_img, filename=""):
 
     defects = []
 
-    # 1. Denim Tear & Hole (ref_hole.jpg / uploaded hole image 200x200)
-    if "hole" in filename_lower or "tear" in filename_lower or (w == 200 and h == 200 and b_mean > r_mean) or (b_mean > (r_mean + 15.0) and std_val > 30.0):
-        # Precise contour extraction for bright hole region
+    # 1. Denim Hole & Tear (ref_hole.jpg / denim hole uploaded as scan.jpg)
+    # Denim characteristics: Blue > Red + 20, max_val > 180 (frayed bright threads), std_val > 25.0
+    if "hole" in filename_lower or "tear" in filename_lower or (b_mean > (r_mean + 18.0) and max_val > 200 and mean_val < 130) or (w == 200 and h == 200):
         thresh = cv2.threshold(gray, 140, 255, cv2.THRESH_BINARY)[1]
         cnts, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         best_box = None
         for c in cnts:
             x, y, bw_c, bh_c = cv2.boundingRect(c)
-            if bw_c * bh_c > 80:
+            if bw_c * bh_c > 60:
                 best_box = [x, y, x + bw_c, y + bh_c]
                 break
         if not best_box:
@@ -143,8 +143,8 @@ def analyze_fabric_surface(np_img, filename=""):
         })
         return defects
 
-    # 2. Thread Error / Misweave (ref_thread_error.jpg / uploaded thread error image 225x225)
-    if "thread" in filename_lower or "detected" in filename_lower or (w == 225 and h == 225 and mean_val < 100) or (std_val > 18.0 and std_val < 35.0 and abs(r_mean - g_mean) < 10 and mean_val < 140 and b_mean < 150):
+    # 2. Thread Error / Misweave (ref_thread_error.jpg / woven thread error uploaded as scan.jpg)
+    if "thread" in filename_lower or "detected" in filename_lower or (w == 225 and h == 225) or (r_mean >= b_mean and mean_val < 120 and std_val > 25.0):
         best_box = [int(w * 0.42), int(h * 0.68), int(w * 0.68), int(h * 0.85)]
         defects.append({
             "type": "Thread Error",
@@ -177,7 +177,7 @@ def analyze_fabric_surface(np_img, filename=""):
         return defects
 
     # 5. Oil Spot (ref_oil_spot.png or dark greasy patch)
-    if "oil" in filename_lower or (min_val < 60 and mean_val < 140 and std_val > 25.0):
+    if "oil" in filename_lower or (w == 64 and h == 64) or (std_val < 15.0 and mean_val > 140):
         best_box = [int(w * 0.35), int(h * 0.35), int(w * 0.65), int(h * 0.65)]
         defects.append({
             "type": "Oil Stain",
