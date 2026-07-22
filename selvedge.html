@@ -48,7 +48,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 .logo-ic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .ai-t{background:linear-gradient(135deg,var(--terracotta),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
 .nav-links a:hover{color:var(--terracotta)}
 
@@ -144,28 +144,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 .def-box li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text)}
 .def-box li span{color:var(--terracotta);font-weight:800}
 
-/* ADVANTAGES OF OUR WEBPAGE SECTION */
-.advantages{padding:70px 0}
-.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
-.adv-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:28px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.03);transition:all .25s ease}
-.adv-card:hover{border-color:var(--terracotta);transform:translateY(-4px)}
-.adv-ic{width:48px;height:48px;border-radius:12px;background:var(--terracotta-g);color:var(--terracotta);
-  display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;font-weight:800}
-.adv-card h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
-.adv-card p{font-size:13px;color:var(--dim);line-height:1.6}
-
-/* FEATURES WE PROVIDE SECTION */
-.features-sec{padding:70px 0;background:var(--base);border-top:1px solid var(--border)}
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
-.feat-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
-.feat-card .num{font-family:var(--fc);font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
-.feat-card h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px}
-.feat-card p{font-size:13px;color:var(--dim);line-height:1.5}
-
 /* MAIN WORKSPACE HEADER */
-.hdr{padding:60px 0 16px;border-top:1px solid var(--border)}
+.hdr{padding:60px 0 16px}
 .hdr-flex{display:flex;justify-content:space-between;align-items:flex-end}
 .hdr-title h1{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text)}
 .hdr-title p{font-size:13px;color:var(--dim);margin-top:2px}
@@ -334,8 +314,6 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
         <li><a href="#home">Home</a></li>
         <li><a href="#showcase">3 Swatches</a></li>
         <li><a href="#defects-info">Defect Guide</a></li>
-        <li><a href="#advantages">Advantages</a></li>
-        <li><a href="#features">Features</a></li>
         <li><a href="#studio">AI Inspector</a></li>
       </ul>
 
@@ -367,8 +345,6 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
         <li><a href="#home" onclick="closeDrawer()">🏠 Home Overview</a></li>
         <li><a href="#showcase" onclick="closeDrawer()">🧵 3 Fabric Swatches</a></li>
         <li><a href="#defects-info" onclick="closeDrawer()">📖 Fabric Defect Guide</a></li>
-        <li><a href="#advantages" onclick="closeDrawer()">⚡ Platform Advantages</a></li>
-        <li><a href="#features" onclick="closeDrawer()">🛠️ Key System Features</a></li>
         <li><a href="#studio" onclick="closeDrawer()">🔍 Studio Inspector</a></li>
         <li><a href="#report" onclick="closeDrawer()">📊 ASTM Audit Ledger</a></li>
         <li><a href="#" onclick="closeDrawer();openAboutModal()">ℹ️ About Platform</a></li>
@@ -465,92 +441,6 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
             <li><span>• Reed Lines & Dents:</span> Friction lines caused by damaged loom reeds.</li>
             <li><span>• Broken Stitches:</span> Splicing failures during continuous weaving.</li>
           </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ADVANTAGES OF OUR WEBPAGE SECTION -->
-  <section class="advantages" id="advantages">
-    <div class="con">
-      <div class="sec-head">
-        <h2>Advantages of Selvedge AI Platform</h2>
-        <p>Why modern textile mills rely on our intelligent automated inspection workspace</p>
-      </div>
-
-      <div class="adv-grid">
-        <div class="adv-card">
-          <div class="adv-ic">⚡</div>
-          <h3>Sub-8ms Real-Time Inference</h3>
-          <p>Ultra-low latency single-pass YOLOv8 and PyTorch models enable real-time defect detection without slowing down high-speed automated loom rollers.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-ic">📊</div>
-          <h3>ASTM D5430 Compliance</h3>
-          <p>Automated 4-Point System penalty point calculations assign Grade A (Pass), Grade B (Warning), or Grade C (Reject) standard status for every roll frame.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-ic">🎯</div>
-          <h3>Multi-Model Neural Hybrid</h3>
-          <p>Combines object detection bounding boxes with deep classification neural networks to eliminate false alarms and guarantee high accuracy.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-ic">📷</div>
-          <h3>Live Camera Stream Integration</h3>
-          <p>Supports continuous IP/USB webcam video streaming with snapshot capture and live anomaly alerts directly inside your web browser.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-ic">📥</div>
-          <h3>One-Click Audit Ledger Export</h3>
-          <p>Generates downloadable CSV reports and high-resolution annotated frame snapshots for factory quality management and client compliance verification.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-ic">🌐</div>
-          <h3>Zero Installation Web App</h3>
-          <p>Runs natively on standard modern web browsers with interactive 3D visual effects, responsive controls, and secure operator authentication.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT FEATURES WE PROVIDE SECTION -->
-  <section class="features-sec" id="features">
-    <div class="con">
-      <div class="sec-head">
-        <h2>What Features We Provide</h2>
-        <p>Comprehensive end-to-end tools designed for operators, quality managers, and loom engineers</p>
-      </div>
-
-      <div class="feat-grid">
-        <div class="feat-card">
-          <div class="num">FEATURE 01</div>
-          <h3>Interactive AI Surface Inspector</h3>
-          <p>Upload any fabric image or select sample swatches to view color-coded bounding boxes, confidence scores, and adjustable threshold sliders.</p>
-        </div>
-        <div class="feat-card">
-          <div class="num">FEATURE 02</div>
-          <h3>Continuous Live Stream & Audio Alert</h3>
-          <p>Stream live loom video feeds with real-time laser scan beams and audible chime alerts upon defect detection.</p>
-        </div>
-        <div class="feat-card">
-          <div class="num">FEATURE 03</div>
-          <h3>ASTM D5430 Audit Classification Ledger</h3>
-          <p>View detailed defect logs with unique IDs, coordinates, severity tags (Minor, Major, Critical), penalty points, and loom remediation actions.</p>
-        </div>
-        <div class="feat-card">
-          <div class="num">FEATURE 04</div>
-          <h3>Live Weave Anomaly Waveform</h3>
-          <p>Monitor real-time pixel variance waveforms and signal telemetry graphs to detect subtle weave texture irregularities.</p>
-        </div>
-        <div class="feat-card">
-          <div class="num">FEATURE 05</div>
-          <h3>Operator Account Portal & Slide-Out Drawer</h3>
-          <p>Seamless left slide-out navigation drawer with user login modal, subscription plan selection, and technical neural specs.</p>
-        </div>
-        <div class="feat-card">
-          <div class="num">FEATURE 06</div>
-          <h3>One-Click Frame & CSV Report Export</h3>
-          <p>Export complete inspection histories to CSV spreadsheet format and download full-resolution image frame snapshots instantaneously.</p>
         </div>
       </div>
     </div>
