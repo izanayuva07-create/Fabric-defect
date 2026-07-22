@@ -168,14 +168,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25)}
   background:#1C1917;overflow:hidden}
 #ins-img{max-width:100%;max-height:580px;display:block;margin:0 auto;object-fit:contain;filter:none!important}
 #ov-cv,#sw-cv{position:absolute;inset:0;pointer-events:none;width:100%;height:100%}
-.dz{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border:2px dashed var(--border-b);border-radius:var(--r2);margin:16px;
-  background:rgba(250,247,242,.92);backdrop-filter:none!important;transition:all .2s;cursor:pointer}
-.dz:hover,.dz.dragover{border-color:var(--terracotta);background:rgba(194,65,12,.08)}
-.dz-ic{width:68px;height:68px;border-radius:18px;background:#fff;border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:16px;box-shadow:0 8px 20px rgba(0,0,0,0.04)}
-.dz h3{font-size:19px;font-weight:700;margin-bottom:6px;color:var(--text)}
-.dz p{font-size:13px;color:var(--dim);margin-bottom:20px}
+.dz{display:none!important;position:absolute;inset:0;pointer-events:none}
 .cam-ctrl-bar{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:20;
   display:flex;gap:12px;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);
   padding:10px 18px;border-radius:99px;border:1px solid var(--border);box-shadow:0 10px 30px rgba(0,0,0,0.1)}
@@ -295,7 +288,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
           <p class="hero-lead">Real-time warp, weft, and surface defect classification powered by custom multi-model neural vision. Zero missed flaws on industrial looms.</p>
           
           <div class="input-options-grid">
-            <div class="opt-card" onclick="switchMode('upload');document.getElementById('studio').scrollIntoView({behavior:'smooth'})">
+            <div class="opt-card" onclick="document.getElementById('file-input').click()">
               <div class="ic">📁</div>
               <h3>Device File Upload</h3>
               <p>Select fabric swatch images, high-res loom captures, or industrial roll scans.</p>
@@ -359,7 +352,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
           <div class="cp-b">
             <!-- TABS -->
             <div class="mode-selector">
-              <div class="mode-tab active" id="tab-upload" onclick="switchMode('upload')">📁 File Upload</div>
+              <div class="mode-tab active" id="tab-upload" onclick="switchMode('upload');document.getElementById('file-input').click()">📁 File Upload</div>
               <div class="mode-tab" id="tab-cam" onclick="switchMode('cam')">📷 Live Camera</div>
             </div>
 
@@ -419,7 +412,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
                 <span>Res: <strong id="ir">800x600</strong></span>
               </div>
               <div style="display:flex;gap:8px">
-                <button class="btn bgh" style="padding:6px 12px;font-size:11px" onclick="document.getElementById('file-input').click()">📁 Upload File</button>
+                <button class="btn bgh" style="padding:6px 12px;font-size:11px" onclick="document.getElementById('file-input').click()">📁 Upload Fabric File</button>
                 <button class="btn bgh" style="padding:6px 12px;font-size:11px" onclick="dlSnap()">💾 Export Frame</button>
               </div>
             </div>
@@ -431,15 +424,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
 
               <!-- WEBCAM HIDDEN VIDEO -->
               <video id="wv" style="display:none" autoplay playsinline muted></video>
-
-              <!-- DROPZONE -->
-              <div class="dz" id="dz" style="display:none" onclick="document.getElementById('file-input').click()">
-                <div class="dz-ic">🧵</div>
-                <h3>Drop Fabric Image Here</h3>
-                <p>Supports PNG, JPG, WEBP up to 50MB</p>
-                <span class="btn bgh" style="padding:8px 16px;font-size:11px">Browse Local Device File</span>
-                <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(event)">
-              </div>
+              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(event)">
 
               <!-- WEBCAM LIVE CONTROL BAR -->
               <div class="cam-ctrl-bar" id="cam-ctrl-bar" style="display:none">
@@ -842,13 +827,13 @@ function switchMode(m){
 
 function setupDragDrop(){
   const dz=document.getElementById('dz');
+  if(!dz)return;
   ['dragenter','dragover'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.add('dragover');}));
   ['dragleave','drop'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.remove('dragover');}));
   dz.addEventListener('drop',ev=>{
     const f=ev.dataTransfer.files[0];
     if(f){
       stopWebcam();
-      document.getElementById('dz').style.display='none';
       const r=new FileReader();
       r.onload=e=>document.getElementById('ins-img').src=e.target.result;
       r.readAsDataURL(f);
@@ -864,7 +849,6 @@ function startWebcam(){
   if(!navigator.mediaDevices?.getUserMedia){alert('Webcam not supported by your browser.');return;}
   navigator.mediaDevices.getUserMedia({video:{width:1280,height:720}}).then(s=>{
     wcStr=s;const v=document.getElementById('wv');v.srcObject=s;v.play();
-    document.getElementById('dz').style.display='none';
     document.getElementById('cam-ctrl-bar').style.display='flex';
     ['btn-sn','btn-st','btn-sc'].forEach(id=>document.getElementById(id).style.display='inline-flex');
     document.getElementById('btn-oc').style.display='none';
@@ -910,7 +894,6 @@ function toggleStream(){
 function stopWebcam(){
   if(wcStr){wcStr.getTracks().forEach(t=>t.stop());wcStr=null;}
   if(stInt){clearInterval(stInt);stInt=null;}
-  document.getElementById('dz').style.display='none';
   document.getElementById('cam-ctrl-bar').style.display='none';
   ['btn-sn','btn-st','btn-sc'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('btn-oc').style.display='inline-flex';
@@ -925,7 +908,6 @@ function stopWebcam(){
 function handleFile(e){
   const f=e.target.files[0];if(!f)return;
   stopWebcam();
-  document.getElementById('dz').style.display='none';
   const r=new FileReader();
   r.onload=ev=>document.getElementById('ins-img').src=ev.target.result;
   r.readAsDataURL(f);
@@ -934,7 +916,6 @@ function handleFile(e){
 
 function lp(e,type){
   stopWebcam();
-  document.getElementById('dz').style.display='none';
   document.querySelectorAll('.pchip').forEach(b=>b.classList.remove('act'));
   if(e?.target)e.target.classList.add('act');
   
