@@ -116,7 +116,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 .hero p{font-size:17px;color:var(--dim);max-width:760px;margin:0 auto 32px;line-height:1.6}
 .hero-ctas{display:flex;justify-content:center;gap:16px}
 
-/* 3D STATS BADGES BAR */
+/* 3D FLOATING STATS BAR */
 .hero-stats{display:flex;justify-content:center;gap:24px;margin-top:40px}
 .hstat-chip{background:var(--panel);border:1px solid var(--border);padding:10px 20px;border-radius:var(--r2);
   display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.03);
@@ -125,7 +125,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 .hstat-chip .val{font-family:var(--fc);font-size:18px;font-weight:800;color:var(--terracotta)}
 .hstat-chip .lbl{font-size:11px;color:var(--dim);font-weight:600}
 
-/* 3D INTERACTIVE FABRIC CARDS SHOWCASE GALLERY */
+/* 3D INTERACTIVE FABRIC CARDS SHOWCASE GALLERY (CLEAN IMAGES ONLY) */
 .fabric-showcase{padding:40px 0 60px;perspective:1200px}
 .sec-head{text-align:center;margin-bottom:36px}
 .sec-head h2{font-family:var(--fh);font-size:32px;font-weight:800;color:var(--text)}
@@ -136,15 +136,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
   box-shadow:0 12px 40px rgba(0,0,0,0.05);transition:transform .15s ease-out, box-shadow .3s ease, border-color .3s ease;
   transform-style:preserve-3d;display:flex;flex-direction:column;position:relative}
 .fab-card-3d:hover{border-color:var(--terracotta);box-shadow:0 24px 60px rgba(194,65,12,0.16)}
-.fab-img-wrap{position:relative;height:250px;overflow:hidden;background:#1C1917;transform:translateZ(10px)}
+.fab-img-wrap{position:relative;height:280px;overflow:hidden;background:#1C1917;transform:translateZ(10px)}
 .fab-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
 .fab-card-3d:hover .fab-img-wrap img{transform:scale(1.08)}
 .fab-tag{position:absolute;top:14px;left:14px;background:rgba(28,25,23,0.85);backdrop-filter:blur(8px);
   color:#fff;font-family:var(--fc);font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;
   text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,0.2);transform:translateZ(25px)}
-.fab-body{padding:24px;flex:1;display:flex;flex-direction:column;justify-content:space-between;transform:translateZ(15px)}
-.fab-body h3{font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px}
-.fab-body p{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:18px}
+.fab-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between;transform:translateZ(15px);text-align:center}
+.fab-body h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px}
 
 /* PARAGRAPHS ABOUT FABRIC DEFECTS SECTION */
 .defects-info{padding:60px 0;background:var(--lift);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -398,7 +397,7 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
     </div>
   </section>
 
-  <!-- 3D INTERACTIVE FABRIC CARDS SHOWCASE GALLERY -->
+  <!-- 3D INTERACTIVE FABRIC CARDS SHOWCASE GALLERY (CLEAN FABRIC SWATCH IMAGES ONLY) -->
   <section class="fabric-showcase" id="showcase">
     <div class="con">
       <div class="sec-head">
@@ -414,11 +413,8 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
             <img src="/ref_stain.jpg" alt="Blue Fabric Liquid Stain Swatch">
           </div>
           <div class="fab-body">
-            <div>
-              <h3>Blue Fabric Stain Swatch</h3>
-              <p>Detects chemical, oil, and liquid discolorations using ResNet-18 binary and multi-class stain engines to prevent dye house rejection.</p>
-            </div>
-            <button class="btn bgh" style="width:100%;margin-top:14px" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'stain')">🔍 Inspect Liquid Stain</button>
+            <h3>Blue Fabric Stain Swatch</h3>
+            <button class="btn bgh" style="width:100%" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'stain')">🔍 Inspect Liquid Stain</button>
           </div>
         </div>
 
@@ -429,11 +425,8 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
             <img src="/ref_thread_error.jpg" alt="Woven Fabric Thread Error Swatch">
           </div>
           <div class="fab-body">
-            <div>
-              <h3>Woven Thread Error Swatch</h3>
-              <p>Identifies warp/weft thread misweaves, slubs, knot anomalies, and missing yarn ends at sub-millimeter precision directly on active looms.</p>
-            </div>
-            <button class="btn bgh" style="width:100%;margin-top:14px" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'thread')">🔍 Inspect Thread Error</button>
+            <h3>Woven Thread Error Swatch</h3>
+            <button class="btn bgh" style="width:100%" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'thread')">🔍 Inspect Thread Error</button>
           </div>
         </div>
 
@@ -444,11 +437,8 @@ footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;backgro
             <img src="/ref_hole.jpg" alt="Denim Fabric Hole & Tear Swatch">
           </div>
           <div class="fab-body">
-            <div>
-              <h3>Denim Hole & Tear Swatch</h3>
-              <p>Pinpoints structural punctures, frayed tears, and needle punctures to trigger immediate loom shutdown before full roll damage occurs.</p>
-            </div>
-            <button class="btn bgh" style="width:100%;margin-top:14px" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'hole')">🔍 Inspect Denim Hole</button>
+            <h3>Denim Hole & Tear Swatch</h3>
+            <button class="btn bgh" style="width:100%" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'hole')">🔍 Inspect Denim Hole</button>
           </div>
         </div>
       </div>
