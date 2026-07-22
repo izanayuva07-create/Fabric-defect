@@ -1,0 +1,21 @@
+# Dataset config for the localized (bounding-box) fabric defects.
+# Global/whole-swatch defects (Shade Variation, Bow and Skew, Barre Effect,
+# Shrinkage) are handled separately by src/train_global_classifier.py, not here.
+
+path: ../data
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: Hole
+  1: Slub
+  2: Broken End
+  3: Broken Pick
+  4: Missing End
+  5: Float
+  6: Reed Mark
+  7: Stain
+  8: Crease Mark
+  9: Pilling
+  10: Snag

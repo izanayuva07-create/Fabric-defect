@@ -1,3 +1,61 @@
 {
-    "python-envs.defaultEnvManager": "ms-python.python:system"
+    "python.defaultInterpreterPath": "C:\\Users\\crist\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}"
+    ],
+    "python.analysis.exclude": [
+        "**/extracted/**",
+        "**/data/**",
+        "**/runs/**",
+        "**/.venv/**",
+        "**/__pycache__/**",
+        "**/.cache/**",
+        "**/node_modules/**",
+        "**/models/**",
+        "**/uploads/**"
+    ],
+    "python.analysis.ignore": [
+        "**"
+    ],
+    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none",
+        "reportMissingModuleSource": "none",
+        "reportOptionalMemberAccess": "none",
+        "reportGeneralTypeIssues": "none",
+        "reportOptionalSubscript": "none",
+        "reportOptionalIterable": "none",
+        "reportUnusedImport": "none",
+        "reportUnusedVariable": "none",
+        "reportMissingTypeStubs": "none",
+        "reportPrivateUsage": "none",
+        "reportUndefinedVariable": "none",
+        "reportAttributeAccessIssue": "none",
+        "reportIndexIssue": "none",
+        "reportCallIssue": "none",
+        "reportOperatorIssue": "none",
+        "reportReturnType": "none",
+        "reportArgumentType": "none",
+        "reportAssignmentType": "none",
+        "reportPossiblyUnbound": "none"
+    },
+    "python.linting.enabled": false,
+    "html.validate.scripts": false,
+    "html.validate.styles": false,
+    "css.validate": false,
+    "javascript.validate.enable": false,
+    "json.validate.enable": false,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.venv": true,
+        "**/extracted": true
+    },
+    "search.exclude": {
+        "**/extracted": true,
+        "**/data": true,
+        "**/runs": true,
+        "**/__pycache__": true,
+        "**/.venv": true
+    }
 }

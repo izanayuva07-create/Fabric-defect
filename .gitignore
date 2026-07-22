@@ -1,0 +1,22 @@
+# Python / Environment
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Datasets, uploads, runs, and zip archives
+*.zip
+data/
+extracted/
+uploads/
+runs/
+
+# Model weights
+*.pt
+*.pth
+*.onnx
+
+# IDE and System files
+.vscode/
+.DS_Store
+Thumbs.db
