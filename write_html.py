@@ -8,7 +8,7 @@ HTML = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SELVEDGE AI — Industrial Fabric Inspection Platform</title>
-<meta name="description" content="AI Fabric Defect Inspection Platform with real-time multi-model vision, trained dataset reference swatches, ASTM D5430 quality grading, live webcam stream, user login, and subscription tiers.">
+<meta name="description" content="Selvedge AI Automated Fabric Defect Inspection Platform. Multi-model neural vision, 3D fabric showcase, ASTM D5430 quality grading, advantages, features, and live loom inspection.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@ html{scroll-behavior:smooth}
   --fh:"Syne",sans-serif;--fb:"Outfit",sans-serif;--fc:"JetBrains Mono",monospace;
   --r1:10px;--r2:16px;--r3:20px
 }
-body{background:var(--void);color:var(--text);font-family:var(--fb);overflow-x:hidden;line-height:1.5}
+body{background:var(--void);color:var(--text);font-family:var(--fb);overflow-x:hidden;line-height:1.6}
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 .rel{position:relative;z-index:1}
 .con{max-width:1400px;margin:0 auto;padding:0 24px}
@@ -34,7 +34,7 @@ body{background:var(--void);color:var(--text);font-family:var(--fb);overflow-x:h
 /* CLEAN NAVBAR WITH 3-LINE HAMBURGER MENU */
 nav{position:fixed;top:0;left:0;right:0;z-index:999;
   background:rgba(250,247,242,.94);backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--border);height:62px;display:flex;align-items:center}
+  border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center}
 .nav-i{max-width:1400px;margin:0 auto;padding:0 24px;
   display:flex;align-items:center;justify-content:space-between;width:100%}
 .nav-left{display:flex;align-items:center;gap:14px}
@@ -52,7 +52,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 .logo-ic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .ai-t{background:linear-gradient(135deg,var(--terracotta),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-/* ONLY 3 NAV LINKS */
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
 .nav-links a:hover{color:var(--terracotta)}
@@ -70,15 +69,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--fb);font-weight:700;font-size:13px;
-  padding:8px 16px;border-radius:var(--r1);cursor:pointer;border:none;transition:all .2s;white-space:nowrap}
+  padding:10px 20px;border-radius:var(--r1);cursor:pointer;border:none;transition:all .2s;white-space:nowrap;text-decoration:none}
 .bg{background:linear-gradient(135deg,var(--terracotta),#EA580C);color:#fff;box-shadow:0 4px 14px var(--terracotta-g)}
-.bg:hover{transform:translateY(-1px);box-shadow:0 6px 18px var(--terracotta-g)}
+.bg:hover{transform:translateY(-2px);box-shadow:0 6px 20px var(--terracotta-g)}
 .bgh{background:rgba(255,255,255,.9);color:var(--text);border:1px solid var(--border-b)}
 .bgh:hover{color:var(--terracotta);border-color:var(--terracotta);background:var(--terracotta-g)}
 .br{background:var(--red);color:#fff;box-shadow:0 4px 14px var(--red-g)}
 .br:hover{transform:translateY(-1px)}
-.bgr{background:linear-gradient(135deg,#059669,#10B981);color:#fff;box-shadow:0 4px 14px var(--green-g)}
-.bgr:hover{transform:translateY(-1px)}
 
 /* SLIDE-OUT LEFT DRAWER MENU */
 .drawer-overlay{position:fixed;inset:0;background:rgba(28,25,23,.5);backdrop-filter:blur(8px);
@@ -108,14 +105,71 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;
   color:var(--text);text-decoration:none;font-weight:600;font-size:13px;transition:all .15s}
 .drawer-menu a:hover{background:var(--lift);color:var(--terracotta)}
 
-/* MAIN WORKSPACE HEADER */
-.hdr{padding:84px 0 16px}
-.hdr-flex{display:flex;justify-content:space-between;align-items:flex-end}
-.hdr-title h1{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--text)}
-.hdr-title p{font-size:13px;color:var(--dim);margin-top:2px}
+/* HERO HOME PAGE SECTION */
+.hero{padding:120px 0 60px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;
+  background:var(--lift);border:1px solid var(--border);font-family:var(--fc);font-size:11px;
+  font-weight:700;color:var(--terracotta);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
+.hero h1{font-family:var(--fh);font-size:48px;font-weight:800;line-height:1.15;color:var(--text);
+  max-width:900px;margin:0 auto 18px}
+.hero p{font-size:17px;color:var(--dim);max-width:760px;margin:0 auto 32px;line-height:1.6}
+.hero-ctas{display:flex;justify-content:center;gap:16px}
+
+/* 3 FABRIC IMAGES SHOWCASE GALLERY */
+.fabric-showcase{padding:40px 0 60px}
+.sec-head{text-align:center;margin-bottom:36px}
+.sec-head h2{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text)}
+.sec-head p{font-size:14px;color:var(--dim);margin-top:6px}
+
+.fab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.fab-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,0.04);transition:all .3s ease;display:flex;flex-direction:column}
+.fab-card:hover{transform:translateY(-6px);border-color:var(--terracotta);box-shadow:0 14px 40px rgba(194,65,12,0.12)}
+.fab-img-wrap{position:relative;height:240px;overflow:hidden;background:#1C1917}
+.fab-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.fab-card:hover .fab-img-wrap img{transform:scale(1.06)}
+.fab-tag{position:absolute;top:14px;left:14px;background:rgba(28,25,23,0.85);backdrop-filter:blur(8px);
+  color:#fff;font-family:var(--fc);font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;
+  text-transform:uppercase;letter-spacing:.8px;border:1px solid rgba(255,255,255,0.2)}
+.fab-body{padding:20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.fab-body h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
+.fab-body p{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:16px}
+
+/* PARAGRAPHS ABOUT FABRIC DEFECTS SECTION */
+.defects-info{padding:60px 0;background:var(--lift);border_top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.def-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.def-text h2{font-family:var(--fh);font-size:32px;font-weight:800;color:var(--text);margin-bottom:16px}
+.def-text p{font-size:15px;color:var(--dim);line-height:1.7;margin-bottom:16px}
+.def-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
+.def-box h4{font-family:var(--fc);font-size:12px;font-weight:700;color:var(--terracotta);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:12px}
+.def-box ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.def-box li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text)}
+.def-box li span{color:var(--terracotta);font-weight:800}
+
+/* ADVANTAGES OF OUR WEBPAGE SECTION */
+.advantages{padding:70px 0}
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+.adv-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:28px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.03);transition:all .25s ease}
+.adv-card:hover{border-color:var(--terracotta);transform:translateY(-4px)}
+.adv-ic{width:48px;height:48px;border-radius:12px;background:var(--terracotta-g);color:var(--terracotta);
+  display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;font-weight:800}
+.adv-card h3{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
+.adv-card p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* FEATURES WE PROVIDE SECTION */
+.features-sec{padding:70px 0;background:var(--base);border-top:1px solid var(--border)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px}
+.feat-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r2);padding:24px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.03)}
+.feat-card .num{font-family:var(--fc);font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.feat-card h3{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px}
+.feat-card p{font-size:13px;color:var(--dim);line-height:1.5}
 
 /* STUDIO WORKBENCH GRID (2-COLUMN DASHBOARD) */
-.studio{padding:10px 0 40px}
+.studio{padding:40px 0 60px}
 .wbench{display:grid;grid-template-columns:310px 1fr;gap:20px;align-items:start}
 
 /* CONTROL PANEL */
@@ -143,7 +197,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
   border-radius:6px;cursor:pointer;transition:all .2s;color:var(--dim)}
 .mode-tab.active{background:var(--terracotta);color:#fff;box-shadow:0 3px 10px var(--terracotta-g)}
 
-/* PRESETS GRID WITH USER-PROVIDED FABRIC STAIN SAMPLE */
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .pchip{background:var(--lift);border:1px solid var(--border);color:var(--text);
   font-size:11px;font-weight:600;padding:8px 10px;border-radius:8px;
@@ -249,7 +302,7 @@ tr:last-child td{border-bottom:none}
 .sub-card .price{font-family:var(--fc);font-size:22px;font-weight:800;color:var(--terracotta);margin:8px 0}
 .sub-card p{font-size:11px;color:var(--dim);line-height:1.4;margin-bottom:12px}
 
-footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;background:var(--base)}
+footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;background:var(--base)}
 .fi{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
   align-items:center;font-size:11px;color:var(--ghost);font-family:var(--fc);font-weight:600}
 </style>
@@ -275,17 +328,18 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
         </div>
       </div>
 
-      <!-- EXACTLY 3 CLEAN NAV LINKS -->
       <ul class="nav-links">
-        <li><a href="#studio">Inspector</a></li>
-        <li><a href="#report">Audit Log</a></li>
-        <li><a href="#analytics" onclick="document.querySelector('.smart-analytics').scrollIntoView({behavior:'smooth'})">Analytics</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#defects-info">Fabric Defects</a></li>
+        <li><a href="#advantages">Advantages</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#studio">AI Inspector</a></li>
       </ul>
 
       <div class="nav-cta">
         <div class="pill p-on" id="sys-pill"><span class="dot"></span>ONLINE</div>
         <button class="btn bgh" onclick="openLoginModal()">👤 Sign In</button>
-        <button class="btn bg" onclick="document.getElementById('file-input').click()">📁 Select Swatch</button>
+        <a class="btn bg" href="#studio">🚀 Launch Inspector</a>
       </div>
     </div>
   </nav>
@@ -307,23 +361,205 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
       </div>
 
       <ul class="drawer-menu">
+        <li><a href="#home" onclick="closeDrawer()">🏠 Home Overview</a></li>
+        <li><a href="#showcase" onclick="closeDrawer()">🧵 3 Fabric Swatches</a></li>
+        <li><a href="#defects-info" onclick="closeDrawer()">📖 Fabric Defect Guide</a></li>
+        <li><a href="#advantages" onclick="closeDrawer()">⚡ Platform Advantages</a></li>
+        <li><a href="#features" onclick="closeDrawer()">🛠️ Key System Features</a></li>
         <li><a href="#studio" onclick="closeDrawer()">🔍 Studio Inspector</a></li>
         <li><a href="#report" onclick="closeDrawer()">📊 ASTM Audit Ledger</a></li>
-        <li><a href="#analytics" onclick="closeDrawer();document.querySelector('.smart-analytics').scrollIntoView({behavior:'smooth'})">📈 Live Signal Telemetry</a></li>
         <li><a href="#" onclick="closeDrawer();openAboutModal()">ℹ️ About Platform</a></li>
         <li><a href="#" onclick="closeDrawer();openSubModal()">💳 Subscription Plans</a></li>
-        <li><a href="#" onclick="closeDrawer();openTechModal()">📄 Neural Vision Specs</a></li>
       </ul>
     </div>
   </div>
 
-  <!-- MAIN HEADER -->
+  <!-- HOME PAGE HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="con">
+      <div class="hero-badge">✨ Next-Generation Textile Intelligence</div>
+      <h1>Automated Industrial Fabric Defect Inspection Platform</h1>
+      <p>Powered by <strong>SELVEDGE AI</strong> multi-model neural vision, real-time webcam streaming, and ASTM D5430 4-point quality auditing to eliminate textile mill waste and ensure zero-defect fabric rolls.</p>
+      <div class="hero-ctas">
+        <a class="btn bg" href="#studio">🔍 Open AI Inspector</a>
+        <a class="btn bgh" href="#showcase">🧵 View 3 Fabric Swatches</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 FABRIC IMAGES SHOWCASE GALLERY -->
+  <section class="fabric-showcase" id="showcase">
+    <div class="con">
+      <div class="sec-head">
+        <h2>3 High-Resolution Fabric Inspection Swatches</h2>
+        <p>Explore real-world trained textile samples evaluated by our neural inspection engine</p>
+      </div>
+
+      <div class="fab-grid">
+        <!-- FABRIC 1: BLUE LIQUID STAIN -->
+        <div class="fab-card">
+          <div class="fab-img-wrap">
+            <span class="fab-tag">01 · Liquid Stain</span>
+            <img src="/ref_stain.jpg" alt="Blue Fabric Liquid Stain Swatch">
+          </div>
+          <div class="fab-body">
+            <div>
+              <h3>Blue Fabric Stain Swatch</h3>
+              <p>Detects chemical, oil, and liquid discolorations using ResNet-18 binary and multi-class stain engines to prevent dye house rejection.</p>
+            </div>
+            <button class="btn bgh" style="width:100%;margin-top:14px" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'stain')">🔍 Inspect Liquid Stain</button>
+          </div>
+        </div>
+
+        <!-- FABRIC 2: WOVEN THREAD ERROR -->
+        <div class="fab-card">
+          <div class="fab-img-wrap">
+            <span class="fab-tag">02 · Thread Error</span>
+            <img src="/ref_thread_error.jpg" alt="Woven Fabric Thread Error Swatch">
+          </div>
+          <div class="fab-body">
+            <div>
+              <h3>Woven Thread Error Swatch</h3>
+              <p>Identifies warp/weft thread misweaves, slubs, knot anomalies, and missing yarn ends at sub-millimeter precision directly on active looms.</p>
+            </div>
+            <button class="btn bgh" style="width:100%;margin-top:14px" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'thread')">🔍 Inspect Thread Error</button>
+          </div>
+        </div>
+
+        <!-- FABRIC 3: DENIM TEAR & HOLE -->
+        <div class="fab-card">
+          <div class="fab-img-wrap">
+            <span class="fab-tag">03 · Structural Tear</span>
+            <img src="/ref_hole.jpg" alt="Denim Fabric Hole & Tear Swatch">
+          </div>
+          <div class="fab-body">
+            <div>
+              <h3>Denim Hole & Tear Swatch</h3>
+              <p>Pinpoints structural punctures, frayed tears, and needle punctures to trigger immediate loom shutdown before full roll damage occurs.</p>
+            </div>
+            <button class="btn bgh" style="width:100%;margin-top:14px" onclick="document.querySelector('#studio').scrollIntoView({behavior:'smooth'});lp(null,'hole')">🔍 Inspect Denim Hole</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARAGRAPHS ABOUT FABRIC DEFECTS SECTION -->
+  <section class="defects-info" id="defects-info">
+    <div class="con">
+      <div class="def-grid">
+        <div class="def-text">
+          <h2>Understanding Industrial Fabric Defects</h2>
+          <p>Fabric defects occur during weaving, knitting, or finishing stages due to yarn tension fluctuations, mechanical loom wear, chemical spills, or broken warp ends. Unchecked flaws severely reduce fabric commercial value and result in heavy financial penalties for textile manufacturers.</p>
+          <p>Manual human inspection in modern high-speed looms is slow, subjective, and prone to fatigue, missing up to <strong>30% of critical flaws</strong>. SELVEDGE AI automates surface scanning with sub-8ms neural vision, instantly localizing and grading defects according to international standards.</p>
+        </div>
+        <div class="def-box">
+          <h4>Common Loom Defect Categories</h4>
+          <ul>
+            <li><span>• Holes & Structural Tears:</span> Punctures causing roll rejection.</li>
+            <li><span>• Oil & Chemical Stains:</span> Contamination from loom lubrication points.</li>
+            <li><span>• Thread & Weave Errors:</span> Broken warp ends, floats, and slubs.</li>
+            <li><span>• Reed Lines & Dents:</span> Friction lines caused by damaged loom reeds.</li>
+            <li><span>• Broken Stitches:</span> Splicing failures during continuous weaving.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGES OF OUR WEBPAGE SECTION -->
+  <section class="advantages" id="advantages">
+    <div class="con">
+      <div class="sec-head">
+        <h2>Advantages of Selvedge AI Platform</h2>
+        <p>Why modern textile mills rely on our intelligent automated inspection workspace</p>
+      </div>
+
+      <div class="adv-grid">
+        <div class="adv-card">
+          <div class="adv-ic">⚡</div>
+          <h3>Sub-8ms Real-Time Inference</h3>
+          <p>Ultra-low latency single-pass YOLOv8 and PyTorch models enable real-time defect detection without slowing down high-speed automated loom rollers.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-ic">📊</div>
+          <h3>ASTM D5430 Compliance</h3>
+          <p>Automated 4-Point System penalty point calculations assign Grade A (Pass), Grade B (Warning), or Grade C (Reject) standard status for every roll frame.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-ic">🎯</div>
+          <h3>Multi-Model Neural Hybrid</h3>
+          <p>Combines object detection bounding boxes with deep classification neural networks to eliminate false alarms and guarantee high accuracy.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-ic">📷</div>
+          <h3>Live Camera Stream Integration</h3>
+          <p>Supports continuous IP/USB webcam video streaming with snapshot capture and live anomaly alerts directly inside your web browser.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-ic">📥</div>
+          <h3>One-Click Audit Ledger Export</h3>
+          <p>Generates downloadable CSV reports and high-resolution annotated frame snapshots for factory quality management and client compliance verification.</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-ic">🌐</div>
+          <h3>Zero Installation Web App</h3>
+          <p>Runs natively on standard modern web browsers with interactive 3D visual effects, responsive controls, and secure operator authentication.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT FEATURES WE PROVIDE SECTION -->
+  <section class="features-sec" id="features">
+    <div class="con">
+      <div class="sec-head">
+        <h2>What Features We Provide</h2>
+        <p>Comprehensive end-to-end tools designed for operators, quality managers, and loom engineers</p>
+      </div>
+
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="num">FEATURE 01</div>
+          <h3>Interactive AI Surface Inspector</h3>
+          <p>Upload any fabric image or select sample swatches to view color-coded bounding boxes, confidence scores, and adjustable threshold sliders.</p>
+        </div>
+        <div class="feat-card">
+          <div class="num">FEATURE 02</div>
+          <h3>Continuous Live Stream & Audio Alert</h3>
+          <p>Stream live loom video feeds with real-time laser scan beams and audible chime alerts upon defect detection.</p>
+        </div>
+        <div class="feat-card">
+          <div class="num">FEATURE 03</div>
+          <h3>ASTM D5430 Audit Classification Ledger</h3>
+          <p>View detailed defect logs with unique IDs, coordinates, severity tags (Minor, Major, Critical), penalty points, and loom remediation actions.</p>
+        </div>
+        <div class="feat-card">
+          <div class="num">FEATURE 04</div>
+          <h3>Live Weave Anomaly Waveform</h3>
+          <p>Monitor real-time pixel variance waveforms and signal telemetry graphs to detect subtle weave texture irregularities.</p>
+        </div>
+        <div class="feat-card">
+          <div class="num">FEATURE 05</div>
+          <h3>Operator Account Portal & Slide-Out Drawer</h3>
+          <p>Seamless left slide-out navigation drawer with user login modal, subscription plan selection, and technical neural specs.</p>
+        </div>
+        <div class="feat-card">
+          <div class="num">FEATURE 06</div>
+          <h3>One-Click Frame & CSV Report Export</h3>
+          <p>Export complete inspection histories to CSV spreadsheet format and download full-resolution image frame snapshots instantaneously.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN WORKSPACE HEADER -->
   <header class="hdr">
     <div class="con">
       <div class="hdr-flex">
         <div class="hdr-title">
-          <h1>Industrial Fabric Defect Inspection System</h1>
-          <p>Real-Time Multi-Model Neural Vision & ASTM D5430 Quality Audit Workspace</p>
+          <h1>Live AI Fabric Inspection Workbench</h1>
+          <p>Test real-time neural vision and ASTM D5430 quality auditing below</p>
         </div>
         <div style="display:flex;gap:10px">
           <span class="pill p-on" id="cam-pill"><span class="dot"></span>READY</span>
@@ -358,7 +594,7 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
               <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.20" oninput="onTh(this.value)">
             </div>
 
-            <!-- REAL DATASET PRESETS (FEATURING USER'S STAIN, THREAD ERROR & DENIM TEAR IMAGES) -->
+            <!-- REAL DATASET PRESETS -->
             <div class="cg">
               <div class="cl"><span>Sample Defect Swatches</span></div>
               <div class="pgrid">
@@ -565,24 +801,9 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
   </div>
 </div>
 
-<!-- TECH MODAL -->
-<div class="mo" id="mo" onclick="if(event.target===this)closeModal('mo')">
-  <div class="mb">
-    <div class="mh">
-      <span>Neural Architecture Specs</span>
-      <button onclick="closeModal('mo')" style="color:var(--dim);font-size:16px;background:none;border:none;cursor:pointer">✕</button>
-    </div>
-    <div style="font-size:13px;color:var(--dim);line-height:1.7">
-      <p style="margin-bottom:10px"><strong>• YOLOv8 Defect Detector:</strong> Real-time single-pass object detection trained for fabric flaws (&lt; 8ms latency).</p>
-      <p style="margin-bottom:10px"><strong>• ResNet-18 Stain Engine:</strong> Binary & multi-class classification for Oil vs. Water vs. Grease stains.</p>
-      <p style="margin-bottom:10px"><strong>• Laplacian Texture Variance:</strong> High-precision surface anomaly thresholding compliant with ASTM D5430 standards.</p>
-    </div>
-  </div>
-</div>
-
 <footer>
   <div class="fi">
-    <p>SELVEDGE AI — Industrial Fabric Inspection Workspace</p>
+    <p>SELVEDGE AI — Industrial Fabric Inspection Platform</p>
     <p>ASTM D5430 · Multi-Model Neural Inspection · &lt; 8ms Latency</p>
   </div>
 </footer>
@@ -590,7 +811,6 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
 <script>
 let report=null,conf=0.20,wcStr=null,stInt=null,frc=0,aCtx=null;
 
-// DRAWER TOGGLE
 function toggleDrawer(){
   document.getElementById('drawer-overlay').classList.toggle('open');
 }
@@ -598,14 +818,11 @@ function closeDrawer(){
   document.getElementById('drawer-overlay').classList.remove('open');
 }
 
-// MODAL OPEN / CLOSE
 function openLoginModal(){closeDrawer();document.getElementById('login-modal').classList.add('open');}
 function openSubModal(){closeDrawer();document.getElementById('sub-modal').classList.add('open');}
 function openAboutModal(){closeDrawer();document.getElementById('about-modal').classList.add('open');}
-function openTechModal(){closeDrawer();document.getElementById('mo').classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-// HIGH-PERFORMANCE 3D DYNAMIC FABRIC RIBBON & CLOTH WEAVE SIMULATION CANVAS
 (function initSuper3DFabricCanvas(){
   const cv=document.getElementById('particles');if(!cv)return;
   const ctx=cv.getContext('2d');let w,h,t=0;
@@ -619,7 +836,6 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
   });
   resize();
 
-  // Floating Silk Yarns & Fiber Particles
   const fibers=Array.from({length:35},()=>({
     x:Math.random()*window.innerWidth,
     y:Math.random()*window.innerHeight,
@@ -637,14 +853,12 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
     mx+=(targetMx-mx)*0.05;
     my+=(targetMy-my)*0.05;
 
-    // Rich luxury linen gradient base background
     const bgGrad=ctx.createLinearGradient(0,0,w,h);
     bgGrad.addColorStop(0,'#FBF8F3');
     bgGrad.addColorStop(0.4,'#F4EFE6');
     bgGrad.addColorStop(1,'#EBE3D5');
     ctx.fillStyle=bgGrad;ctx.fillRect(0,0,w,h);
 
-    // 1. Draw 5 3D Flowing Silk Cloth Ribbons with depth shadows & highlights
     const RIBBONS=5;
     for(let r=0;r<RIBBONS;r++){
       const yOffset=(h/(RIBBONS+1))*(r+1);
@@ -675,7 +889,6 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
       }
       ctx.fillStyle=ribbonGrad;ctx.fill();
 
-      // 3D Crest Highlight Line on Silk Fold
       ctx.beginPath();
       for(let x=0;x<=w;x+=12){
         const mouseDist=Math.sin(x*0.002+mx*3);
@@ -689,7 +902,6 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
       ctx.lineWidth=2.5;ctx.stroke();
     }
 
-    // 2. Dynamic 3D Warp & Weft Thread Weave Grid Overlay
     const COLS=36, ROWS=24;
     const dx=w/COLS, dy=h/ROWS;
 
@@ -719,7 +931,6 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
       ctx.lineWidth=r%6===0?1.8:0.7;ctx.stroke();
     }
 
-    // 3. Floating Silk Fiber Yarns
     fibers.forEach(f=>{
       f.y-=f.speed;
       f.x+=Math.sin(t+f.y*0.01)*0.5;
@@ -735,7 +946,6 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
       ctx.restore();
     });
 
-    // 4. Soft Golden Loom Sunlight Orbs
     for(let s=0;s<3;s++){
       const orbX=(w*0.25)+(s*w*0.35)+Math.sin(t*0.4+s)*80;
       const orbY=(h*0.3)+Math.cos(t*0.3+s)*60;
@@ -754,7 +964,6 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
   draw();
 })();
 
-// WEAVE ANOMALY SIGNAL CANVAS
 let sigT=0;
 function drawSig(){
   const cv=document.getElementById('sig-cv');if(!cv)return;
@@ -774,7 +983,6 @@ function drawSig(){
 }
 drawSig();
 
-// SWEEP BEAM
 let swT=0;
 function animSw(){
   const cv=document.getElementById('sw-cv'),st=document.getElementById('stage');
@@ -792,7 +1000,6 @@ function animSw(){
 }
 animSw();
 
-// OFFICIAL PRESET MAP (FEATURING USER'S STAIN, THREAD ERROR & DENIM TEAR REFERENCE IMAGES)
 const PRESETS = {
   'clean': '/test_clean.jpg',
   'stain': '/ref_stain.jpg',
@@ -815,7 +1022,6 @@ function switchMode(m){
 
 function onTh(v){conf=parseFloat(v);document.getElementById('tv').textContent=parseFloat(v).toFixed(2);}
 
-// WEBCAM
 function startWebcam(){
   if(!navigator.mediaDevices?.getUserMedia){alert('Webcam not supported by your browser.');return;}
   navigator.mediaDevices.getUserMedia({video:{width:1280,height:720}}).then(s=>{
