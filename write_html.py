@@ -143,7 +143,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
   border-radius:6px;cursor:pointer;transition:all .2s;color:var(--dim)}
 .mode-tab.active{background:var(--terracotta);color:#fff;box-shadow:0 3px 10px var(--terracotta-g)}
 
-/* PRESETS GRID WITH USER-PROVIDED TEAR & HOLE REFERENCE IMAGE */
+/* PRESETS GRID WITH USER-PROVIDED THREAD ERROR SAMPLE */
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .pchip{background:var(--lift);border:1px solid var(--border);color:var(--text);
   font-size:11px;font-weight:600;padding:8px 10px;border-radius:8px;
@@ -358,15 +358,15 @@ footer{border-top:1px solid var(--border);padding:20px 0;margin-top:40px;backgro
               <input type="range" id="conf-slider" min="0.05" max="0.95" step="0.05" value="0.20" oninput="onTh(this.value)">
             </div>
 
-            <!-- REAL DATASET REFERENCE PRESETS (FEATURING USER DENIM TEAR & HOLE) -->
+            <!-- REAL DATASET PRESETS (FEATURING USER'S THREAD ERROR & DENIM TEAR IMAGES) -->
             <div class="cg">
               <div class="cl"><span>Sample Defect Swatches</span></div>
               <div class="pgrid">
                 <button class="pchip cln act" onclick="lp(event,'clean')">✨ Clean (Pass)</button>
+                <button class="pchip" onclick="lp(event,'thread')">🧶 Thread Error</button>
                 <button class="pchip" onclick="lp(event,'hole')">🕳️ Tear / Hole</button>
                 <button class="pchip" onclick="lp(event,'oil')">🛢️ Oil Spot</button>
                 <button class="pchip" onclick="lp(event,'stain')">💧 Fabric Stain</button>
-                <button class="pchip" onclick="lp(event,'thread')">🧶 Thread Error</button>
                 <button class="pchip" onclick="lp(event,'stitch')">🪡 Broken Stitch</button>
                 <button class="pchip" onclick="lp(event,'lines')">🧵 Reed Lines</button>
               </div>
@@ -792,13 +792,13 @@ function animSw(){
 }
 animSw();
 
-// OFFICIAL PRESET MAP (FEATURING USER'S DENIM HOLE & TEAR SAMPLE IMAGE)
+// OFFICIAL PRESET MAP (FEATURING USER'S THREAD ERROR & DENIM TEAR REFERENCE IMAGES)
 const PRESETS = {
   'clean': '/test_clean.jpg',
+  'thread': '/ref_thread_error.jpg',
   'hole': '/ref_hole.jpg',
   'oil': '/ref_oil_spot.png',
   'stain': '/ref_stain.jpg',
-  'thread': '/ref_thread_error.png',
   'stitch': '/ref_broken_stitch.jpg',
   'lines': '/ref_lines.jpg'
 };
