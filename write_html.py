@@ -617,65 +617,150 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:80px;backgro
 <script>
 let report=null,conf=0.20,wcStr=null,stInt=null,frc=0,aCtx=null;
 
-// DYNAMIC ANIMATED FLOWING SILK & FABRIC WEAVE CANVAS BACKGROUND
-(function initFabricClothCanvas(){
+// HIGH-PERFORMANCE 3D DYNAMIC FABRIC RIBBON & CLOTH WEAVE SIMULATION CANVAS
+(function initSuper3DFabricCanvas(){
   const cv=document.getElementById('particles');if(!cv)return;
   const ctx=cv.getContext('2d');let w,h,t=0;
+  let mx=0,my=0,targetMx=0,targetMy=0;
+  
   function resize(){w=cv.width=window.innerWidth;h=cv.height=window.innerHeight;}
-  window.addEventListener('resize',resize);resize();
+  window.addEventListener('resize',resize);
+  window.addEventListener('mousemove',(e)=>{
+    targetMx=(e.clientX/window.innerWidth)-0.5;
+    targetMy=(e.clientY/window.innerHeight)-0.5;
+  });
+  resize();
 
-  const COLS=42, ROWS=30;
+  // Floating Silk Yarns & Fiber Particles
+  const fibers=Array.from({length:35},()=>({
+    x:Math.random()*window.innerWidth,
+    y:Math.random()*window.innerHeight,
+    length:Math.random()*40+20,
+    angle:Math.random()*Math.PI*2,
+    speed:Math.random()*0.4+0.2,
+    rotSpeed:(Math.random()-0.5)*0.02,
+    size:Math.random()*2+1,
+    alpha:Math.random()*0.4+0.2,
+    color:Math.random()>0.5?'217, 119, 6':'194, 65, 12'
+  }));
+
   function draw(){
-    ctx.clearRect(0,0,w,h);t+=0.012;
+    ctx.clearRect(0,0,w,h);t+=0.015;
+    mx+=(targetMx-mx)*0.05;
+    my+=(targetMy-my)*0.05;
 
+    // Rich luxury linen gradient base background
     const bgGrad=ctx.createLinearGradient(0,0,w,h);
-    bgGrad.addColorStop(0,'#FAF7F2');
-    bgGrad.addColorStop(0.5,'#F4EFE6');
-    bgGrad.addColorStop(1,'#EFE8DC');
+    bgGrad.addColorStop(0,'#FBF8F3');
+    bgGrad.addColorStop(0.4,'#F4EFE6');
+    bgGrad.addColorStop(1,'#EBE3D5');
     ctx.fillStyle=bgGrad;ctx.fillRect(0,0,w,h);
 
-    const dx=w/COLS;const dy=h/ROWS;
+    // 1. Draw 5 3D Flowing Silk Cloth Ribbons with depth shadows & highlights
+    const RIBBONS=5;
+    for(let r=0;r<RIBBONS;r++){
+      const yOffset=(h/(RIBBONS+1))*(r+1);
+      const frequency=0.003+r*0.001;
+      const amplitude=55+r*15;
+      const phase=t*(0.8+r*0.2)+r*1.5;
 
-    // Render flowing fabric warp lines (Vertical threads)
+      ctx.beginPath();ctx.moveTo(0,h);
+      for(let x=0;x<=w;x+=12){
+        const mouseDist=Math.sin(x*0.002+mx*3);
+        const wave=Math.sin(x*frequency+phase)*amplitude+ 
+                   Math.cos(x*0.008-phase)*(amplitude*0.4)+
+                   (my*60*mouseDist);
+        const y=yOffset+wave;
+        if(x===0)ctx.lineTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.lineTo(w,h);ctx.closePath();
+
+      const ribbonGrad=ctx.createLinearGradient(0,yOffset-80,w,yOffset+120);
+      if(r%2===0){
+        ribbonGrad.addColorStop(0,`rgba(217, 119, 6, ${0.09-r*0.012})`);
+        ribbonGrad.addColorStop(0.5,`rgba(194, 65, 12, ${0.12-r*0.015})`);
+        ribbonGrad.addColorStop(1,`rgba(245, 158, 11, 0)`);
+      }else{
+        ribbonGrad.addColorStop(0,`rgba(180, 130, 70, ${0.10-r*0.012})`);
+        ribbonGrad.addColorStop(0.5,`rgba(217, 119, 6, ${0.08-r*0.012})`);
+        ribbonGrad.addColorStop(1,`rgba(194, 65, 12, 0)`);
+      }
+      ctx.fillStyle=ribbonGrad;ctx.fill();
+
+      // 3D Crest Highlight Line on Silk Fold
+      ctx.beginPath();
+      for(let x=0;x<=w;x+=12){
+        const mouseDist=Math.sin(x*0.002+mx*3);
+        const wave=Math.sin(x*frequency+phase)*amplitude+ 
+                   Math.cos(x*0.008-phase)*(amplitude*0.4)+
+                   (my*60*mouseDist);
+        const y=yOffset+wave;
+        if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=`rgba(255, 255, 255, ${0.45-r*0.05})`;
+      ctx.lineWidth=2.5;ctx.stroke();
+    }
+
+    // 2. Dynamic 3D Warp & Weft Thread Weave Grid Overlay
+    const COLS=36, ROWS=24;
+    const dx=w/COLS, dy=h/ROWS;
+
     for(let c=0;c<=COLS;c++){
       ctx.beginPath();
       for(let r=0;r<=ROWS;r++){
-        const baseX=c*dx;const baseY=r*dy;
-        const waveX=Math.sin(r*0.15+t+c*0.1)*18+Math.cos(r*0.08-t*0.8)*10;
-        const waveY=Math.cos(c*0.15+t+r*0.1)*8;
-        const x=baseX+waveX;const y=baseY+waveY;
+        const baseX=c*dx, baseY=r*dy;
+        const waveX=Math.sin(r*0.12+t+c*0.08)*14+(mx*30);
+        const waveY=Math.cos(c*0.12+t*0.9+r*0.08)*10+(my*30);
+        const x=baseX+waveX, y=baseY+waveY;
         if(r===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
       }
-      ctx.strokeStyle=c%2===0?'rgba(194, 65, 12, 0.08)':'rgba(217, 119, 6, 0.06)';
-      ctx.lineWidth=c%4===0?1.8:0.8;
-      ctx.stroke();
+      ctx.strokeStyle=c%3===0?'rgba(194, 65, 12, 0.09)':'rgba(217, 119, 6, 0.05)';
+      ctx.lineWidth=c%6===0?1.8:0.7;ctx.stroke();
     }
 
-    // Render flowing fabric weft lines (Horizontal threads)
     for(let r=0;r<=ROWS;r++){
       ctx.beginPath();
       for(let c=0;c<=COLS;c++){
-        const baseX=c*dx;const baseY=r*dy;
-        const waveX=Math.sin(r*0.15+t+c*0.1)*18+Math.cos(r*0.08-t*0.8)*10;
-        const waveY=Math.cos(c*0.15+t+r*0.1)*8;
-        const x=baseX+waveX;const y=baseY+waveY;
+        const baseX=c*dx, baseY=r*dy;
+        const waveX=Math.sin(r*0.12+t+c*0.08)*14+(mx*30);
+        const waveY=Math.cos(c*0.12+t*0.9+r*0.08)*10+(my*30);
+        const x=baseX+waveX, y=baseY+waveY;
         if(c===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
       }
-      ctx.strokeStyle=r%2===0?'rgba(180, 130, 70, 0.12)':'rgba(120, 90, 60, 0.06)';
-      ctx.lineWidth=r%4===0?1.8:0.8;
-      ctx.stroke();
+      ctx.strokeStyle=r%3===0?'rgba(180, 130, 70, 0.10)':'rgba(120, 90, 60, 0.04)';
+      ctx.lineWidth=r%6===0?1.8:0.7;ctx.stroke();
     }
 
-    // Floating golden silk thread glow accents
-    for(let p=0;p<15;p++){
-      const px=((Math.sin(t*0.5+p)*0.5+0.5)*w);
-      const py=((Math.cos(t*0.3+p*1.5)*0.5+0.5)*h);
-      const rad=50+Math.sin(t+p)*25;
-      const pGrad=ctx.createRadialGradient(px,py,0,px,py,rad);
-      pGrad.addColorStop(0,'rgba(217, 119, 6, 0.12)');
-      pGrad.addColorStop(1,'rgba(217, 119, 6, 0)');
-      ctx.fillStyle=pGrad;ctx.beginPath();ctx.arc(px,py,rad,0,Math.PI*2);ctx.fill();
+    // 3. Floating Silk Fiber Yarns
+    fibers.forEach(f=>{
+      f.y-=f.speed;
+      f.x+=Math.sin(t+f.y*0.01)*0.5;
+      f.angle+=f.rotSpeed;
+
+      if(f.y<-50){f.y=h+50;f.x=Math.random()*w;}
+
+      ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.angle);
+      ctx.beginPath();ctx.moveTo(-f.length/2,0);
+      ctx.bezierCurveTo(-f.length/4,6,f.length/4,-6,f.length/2,0);
+      ctx.strokeStyle=`rgba(${f.color}, ${f.alpha})`;
+      ctx.lineWidth=f.size;ctx.stroke();
+      ctx.restore();
+    });
+
+    // 4. Soft Golden Loom Sunlight Orbs
+    for(let s=0;s<3;s++){
+      const orbX=(w*0.25)+(s*w*0.35)+Math.sin(t*0.4+s)*80;
+      const orbY=(h*0.3)+Math.cos(t*0.3+s)*60;
+      const rad=180+Math.sin(t*0.6+s)*40;
+
+      const orbGrad=ctx.createRadialGradient(orbX,orbY,0,orbX,orbY,rad);
+      orbGrad.addColorStop(0,'rgba(245, 158, 11, 0.14)');
+      orbGrad.addColorStop(0.6,'rgba(217, 119, 6, 0.04)');
+      orbGrad.addColorStop(1,'rgba(217, 119, 6, 0)');
+
+      ctx.fillStyle=orbGrad;ctx.beginPath();ctx.arc(orbX,orbY,rad,0,Math.PI*2);ctx.fill();
     }
+
     requestAnimationFrame(draw);
   }
   draw();
